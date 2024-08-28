@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class Participant extends Authenticatable
+{
+    use HasFactory;
+    protected $fillable = [
+        'name',
+        'email',
+        'no_hp',
+        'password',
+    ];
+
+    public function socialAccounts()
+    {
+        return $this->hasMany(SocialAccount::class);
+    }
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class);
+    }
+    public function getNameAttribute($value)
+    {
+        return ucwords(strtolower($value));
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
+}
