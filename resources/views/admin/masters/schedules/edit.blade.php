@@ -1,7 +1,7 @@
 @extends('layouts/dashboard')
 
 @section('title')
-    Buat Shift Baru
+    Buat Jadwal Baru
 @endsection
 
 @section('page-style')
@@ -13,7 +13,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Edit Grup Kursi</h5>
+            <h5 class="card-title fw-semibold mb-4">Input Jadwal</h5>
             @if (Session::has('error'))
                 <div class="alert alert-danger alert-dismissible fade show m-2">
                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
@@ -28,16 +28,16 @@
                     </button>
                 </div>
             @endif
-            <form method="POST" action="{{ route('group-seats.update', $groupSeat->id) }}">
+            <form method="POST" action="{{ route('schedules.update', $schedule->id) }}">
                 @csrf
                 @method('PATCH')
                 <div class="row">
                     <div class="col-lg-6 d-flex align-items-stretch">
                         <div class="mb-3 w-100">
-                            <label for="name" class="form-label">Nama Grup Kursi</label>
+                            <label for="shiftName" class="form-label">Nama Jadwal</label>
                             <input type="text" name="name"
                                 class="form-control {{ $errors->has('name') ? 'border border-danger' : '' }}"
-                                value="{{ $groupSeat->name }}" id="name" aria-describedby="name">
+                                value="{{ $schedule->name }}" id="shiftName" aria-describedby="name">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -45,11 +45,11 @@
                     </div>
                     <div class="col-lg-6 d-flex align-items-stretch">
                         <div class="mb-3 w-100">
-                            <label for="quota" class="form-label">Kuota</label>
-                            <input type="text" name="quota"
-                                class="form-control {{ $errors->has('quota') ? 'border border-danger' : '' }}"
-                                value="{{ $groupSeat->quota }}" id="quota" aria-describedby="quota">
-                            @error('quota')
+                            <label for="date" class="form-label">Tanggal</label>
+                            <input type="text" name="date"
+                                class="form-control {{ $errors->has('date') ? 'border border-danger' : '' }}"
+                                value="{{ $schedule->date }}" id="date" aria-describedby="start">
+                            @error('date')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -66,46 +66,12 @@
                                 <option value="">Pilih Event</option>
                                 @foreach ($events as $event)
                                     <option value="{{ $event->id }}"
-                                        {{ $groupSeat->event_id === $event->id ? 'selected' : '' }}>
+                                        {{ $schedule->event_id === $event->id ? 'selected' : '' }}>
                                         {{ $event->name }}
                                     </option>
                                 @endforeach
                             </select>
                             @error('event_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6 d-flex align-items-stretch">
-                        <div class="mb-3 w-100">
-                            <label for="kode" class="form-label">Jadwal</label>
-                            <select name="schedule_id"
-                                class="form-control {{ $errors->has('schedule_id') ? 'border border-danger' : '' }}"
-                                id="kode" aria-describedby="schedule_id">
-                                <option value="">Pilih Jadwal</option>
-                                @foreach ($schedules as $schedule)
-                                    <option value="{{ $schedule->id }}"
-                                        {{ $groupSeat->schedule_id === $schedule->id ? 'selected' : '' }}>
-                                        {{ $schedule->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('schedule_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-6 d-flex align-items-stretch">
-                        <div class="mb-3 w-100">
-                            <label for="price" class="form-label">Harga</label>
-                            <input type="number" name="price"
-                                class="form-control {{ $errors->has('price') ? 'border border-danger' : '' }}"
-                                value="{{ $groupSeat->price }}" id="price" aria-describedby="price">
-                            @error('price')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -124,4 +90,16 @@
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+    <script src="{{ asset('assets/vendor/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}">
+    </script>
+
+    <script>
+        $('#date').bootstrapMaterialDatePicker({
+            weekStart: 1,
+            time: false,
+            format: 'YYYY/MM/DD',
+        });
+    </script>
 @endsection

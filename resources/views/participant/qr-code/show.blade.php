@@ -76,9 +76,82 @@
                             <polyline points="9 11 12 14 22 4"></polyline>
                             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                         </svg>
-                        <strong>Mohon Tuggu!</strong> Pendaftaran <strong>{{ $event->name }}</strong> anda masih diproses.
+                        <strong>Mohon Tuggu!</strong> Pendaftaran <strong>{{ $event->name }}</strong> anda diproses.
+                        Silahkan Melakukan Pembayaran
                     </div>
                 @endif
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-8 col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="d-block w-100 my-2">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="d-flex flex-column">
+                                                        <img src="{{ asset('/storage/qr-codes/dummy.png') }}" width="300"
+                                                            style=" filter: blur(15px);" height="300" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="d-flex flex-row flex-wrap align-items-stretch m-2">
+                                                @foreach ($fields as $field)
+                                                    <div class="col-lg-6 col-sm-6">
+                                                        <div class="p-2">
+                                                            <h4>{{ $field->title }}: </h4>
+                                                            @if (is_array($field->value) || is_object($field->value))
+                                                                <div class="d-flex align-items-center gap-2 flex-wrap">
+                                                                    @foreach ($field->value as $value)
+                                                                        <span
+                                                                            class="badge bg-success rounded-3 fw-semibold">{{ $value->name }}</span>
+                                                                    @endforeach
+                                                                </div>
+                                                            @else
+                                                                <p>{{ $field->value }}</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-4">
+                                        Total Tagihan
+                                    </h5>
+
+                                    <div class="row">
+                                        <div class="d-flex justify-content-between">
+                                            <h6>Harga</h6>
+                                            <p>Rp. {{ number_format($price, 0) }}</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between">
+                                            <h6>Kode Bayar</h6>
+                                            <p>Rp.{{ number_format(1, 0) }}</p>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="d-flex justify-content-between">
+                                            <h6>Total</h6>
+                                            <p>Rp. {{ number_format($price + 1) }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title mb-4">
@@ -123,14 +196,21 @@
                                 <div class="col-lg-4 d-flex align-items-stretch">
                                     <div class="mb-3 w-100">
                                         <label for="upload-data" class="form-label">Upload File</label>
-                                        <input type="file" name="file" class="form-control" id="upload-data"
-                                            aria-describedby="file" placeholder="Masukan File">
+                                        <input type="file" name="file" accept="image/png, image/jpeg, image/jpg"
+                                            class="form-control" id="upload-data" aria-describedby="file"
+                                            placeholder="Masukan File">
                                     </div>
                                 </div>
                             </div>
 
                             <span>
-                                <p> Silahkan Transfer Tagihan Ke Rek Ini BCA 1231231234 Atas Nama John Doe</p>
+                                <p> Mohon upload file berjenis png, jpg atau jpeg</p>
+                            </span>
+
+                            <span>
+                                <p> Silahkan Transfer Tagihan Ke Rek Ini BCA <strong>8620726002</strong> Atas Nama
+                                    <strong>BGKP Santo Yakobus</strong>
+                                </p>
                             </span>
 
                             <button type="submit" class="btn btn-primary btn-submit">Submit</button>

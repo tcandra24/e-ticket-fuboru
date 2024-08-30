@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\GroupSeat;
 use App\Models\Event;
+use App\Models\Schedule;
 
 class GroupSeatController extends Controller
 {
@@ -19,7 +20,9 @@ class GroupSeatController extends Controller
     public function create()
     {
         $events = Event::where('is_active', true)->get();
-        return view('admin.masters.group-seats.create', [ 'events' => $events ]);
+        $schedules = Schedule::where('is_active', true)->get();
+
+        return view('admin.masters.group-seats.create', [ 'events' => $events, 'schedules' => $schedules ]);
     }
 
     public function store(Request $request)
@@ -27,11 +30,15 @@ class GroupSeatController extends Controller
         $request->validate([
             'name' => 'required',
             'quota' => 'required',
-            'event_id' => 'required'
+            'event_id' => 'required',
+            'schedule_id' => 'required',
+            'price' => 'required',
         ], [
             'name.required' => 'Nama wajib diisi',
             'quota.required' => 'Kuota wajib diisi',
-            'event_id.required' => 'Event wajib diisi'
+            'event_id.required' => 'Event wajib diisi',
+            'schedule_id.required' => 'Jadwal wajib diisi',
+            'price.required' => 'Harga wajib diisi'
         ]);
 
         try {
@@ -39,7 +46,9 @@ class GroupSeatController extends Controller
             GroupSeat::create([
                 'name' => $request->name,
                 'quota' => $request->quota,
-                'event_id' => $request->event_id
+                'event_id' => $request->event_id,
+                'schedule_id' => $request->schedule_id,
+                'price' => $request->price
             ]);
 
             return redirect()->route('group-seats.index')->with('success', 'Grup Kursi Berhasil Disimpan');
@@ -52,8 +61,9 @@ class GroupSeatController extends Controller
     {
         try {
             $events = Event::where('is_active', true)->get();
+            $schedules = Schedule::where('is_active', true)->get();
 
-            return view('admin.masters.group-seats.edit', [ 'groupSeat' => $groupSeat, 'events' => $events ]);
+            return view('admin.masters.group-seats.edit', [ 'groupSeat' => $groupSeat, 'events' => $events, 'schedules' => $schedules ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -64,19 +74,24 @@ class GroupSeatController extends Controller
         $request->validate([
             'name' => 'required',
             'quota' => 'required',
-            'event_id' => 'required'
+            'event_id' => 'required',
+            'schedule_id' => 'required',
+            'price' => 'required',
         ], [
             'name.required' => 'Nama wajib diisi',
             'quota.required' => 'Kuota wajib diisi',
-            'event_id.required' => 'Event wajib diisi'
+            'event_id.required' => 'Event wajib diisi',
+            'schedule_id.required' => 'Jadwal wajib diisi',
+            'price.required' => 'Harga wajib diisi'
         ]);
 
         try {
             $groupSeat->update([
                 'name' => $request->name,
                 'quota' => $request->quota,
-                'is_active' => true,
-                'event_id' => $request->event_id
+                'event_id' => $request->event_id,
+                'schedule_id' => $request->schedule_id,
+                'price' => $request->price
             ]);
 
             return redirect()->route('group-seats.index')->with('success', 'Grup Kursi Berhasil Diupdate');

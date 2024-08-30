@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnRelationMethodName extends Migration
+class AddColumnQty extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnRelationMethodName extends Migration
      */
     public function up()
     {
-        Schema::table('form_fields', function (Blueprint $table) {
-            $table->string('relation_method_name')->nullable();
+        Schema::table('registrations', function (Blueprint $table) {
+            $table->integer('qty');
         });
     }
 
@@ -25,8 +25,8 @@ class AddColumnRelationMethodName extends Migration
      */
     public function down()
     {
-        Schema::table('form_fields', function (Blueprint $table) {
-            $table->dropColumn('relation_method_name');
+        Schema::table('registrations', function (Blueprint $table) {
+            $table->dropColumn('qty');
         });
     }
 }

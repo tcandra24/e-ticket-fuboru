@@ -28,7 +28,8 @@
                         auth()->user()->can('master.jobs.index') ||
                         auth()->user()->can('master.manufactures.index') ||
                         auth()->user()->can('master.services.index') ||
-                        auth()->user()->can('master.group-seats.index'))
+                        auth()->user()->can('master.group-seats.index') ||
+                        auth()->user()->can('master.seats.index'))
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                         <span class="hide-menu">Master</span>
@@ -44,7 +45,7 @@
                             </a>
                         </li>
                     @endcan
-                    @can('master.jobs.index')
+                    {{-- @can('master.jobs.index')
                         <li class="sidebar-item {{ request()->is('admin/master/jobs/*') ? 'selected' : '' }}">
                             <a class="sidebar-link {{ request()->is('admin/master/jobs/*') ? 'active' : '' }}"
                                 href="{{ route('jobs.index') }}" aria-expanded="false">
@@ -76,15 +77,39 @@
                                 <span class="hide-menu">Jasa</span>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                     @can('master.group-seats.index')
                         <li class="sidebar-item {{ request()->is('admin/master/group-seats/*') ? 'selected' : '' }}">
                             <a class="sidebar-link {{ request()->is('admin/master/group-seats/*') ? 'active' : '' }}"
                                 href="{{ route('group-seats.index') }}" aria-expanded="false">
                                 <span>
-                                    <i class="ti ti-armchair"></i>
+                                    <i class="ti ti-sofa"></i>
                                 </span>
                                 <span class="hide-menu">Grup Kursi</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('master.seats.index')
+                        <li class="sidebar-item {{ request()->is('admin/master/seats/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/master/seats/*') ? 'active' : '' }}"
+                                href="{{ route('seats.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-armchair"></i>
+                                </span>
+                                <span class="hide-menu">Kursi</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('master.schedules.index')
+                        <li class="sidebar-item {{ request()->is('admin/master/schedules/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/master/schedules/*') ? 'active' : '' }}"
+                                href="{{ route('schedules.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-calendar"></i>
+                                </span>
+                                <span class="hide-menu">Jadwal</span>
                             </a>
                         </li>
                     @endcan

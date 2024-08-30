@@ -74,6 +74,39 @@
                             @enderror
                         </div>
                     </div>
+
+                    <div class="col-lg-6 d-flex align-items-stretch">
+                        <div class="mb-3 w-100">
+                            <label for="kode" class="form-label">Jadwal</label>
+                            <select name="schedule_id"
+                                class="form-control {{ $errors->has('schedule_id') ? 'border border-danger' : '' }}"
+                                id="kode" aria-describedby="schedule_id">
+                                <option value="">Pilih Jadwal</option>
+                                @foreach ($schedules as $schedule)
+                                    <option value="{{ $schedule->id }}">
+                                        {{ $schedule->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('schedule_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 d-flex align-items-stretch">
+                        <div class="mb-3 w-100">
+                            <label for="price" class="form-label">Harga</label>
+                            <input type="number" name="price"
+                                class="form-control {{ $errors->has('price') ? 'border border-danger' : '' }}"
+                                value="{{ old('price') }}" id="price" aria-describedby="price">
+                            @error('price')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

@@ -28,6 +28,11 @@ class Event extends Model
         return $this->belongsToMany(FormField::class, 'form_event');
     }
 
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'event_id', 'id');
+    }
+
     public function getNameAttribute($value)
     {
         return ucwords($value);

@@ -9,9 +9,9 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body p-4">
-                    <h5 class="card-title fw-semibold mb-4">Daftar Grup Kursi</h5>
+                    <h5 class="card-title fw-semibold mb-4">Daftar Kursi</h5>
                     @can('master.group-seats.create')
-                        <a href="{{ route('group-seats.create') }}" class="btn btn-primary m-1">Tambah</a>
+                        <a href="{{ route('seats.create') }}" class="btn btn-primary m-1">Tambah</a>
                     @endcan
                     @if (Session::has('success'))
                         <div class="alert alert-success alert-dismissible fade show m-2">
@@ -53,22 +53,7 @@
                                         <h6 class="fw-semibold mb-0">Nama</h6>
                                     </th>
                                     <th class="border-bottom-0 pb-0">
-                                        <h6 class="fw-semibold mb-0">Event</h6>
-                                    </th>
-                                    <th class="border-bottom-0 pb-0">
-                                        <h6 class="fw-semibold mb-0">Jadwal</h6>
-                                    </th>
-                                    <th class="border-bottom-0 pb-0">
-                                        <h6 class="fw-semibold mb-0">Harga</h6>
-                                    </th>
-                                    <th class="border-bottom-0 pb-0">
-                                        <h6 class="fw-semibold mb-0">Kuota</h6>
-                                    </th>
-                                    <th class="border-bottom-0 pb-0">
-                                        <h6 class="fw-semibold mb-0">Sisa</h6>
-                                    </th>
-                                    <th class="border-bottom-0 pb-0">
-                                        <h6 class="fw-semibold mb-0">Status</h6>
+                                        <h6 class="fw-semibold mb-0">Grup Kursi</h6>
                                     </th>
                                     <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Action</h6>
@@ -76,61 +61,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (count($groupSeats) > 0)
-                                    @foreach ($groupSeats as $key => $groupSeat)
+                                @if (count($seats) > 0)
+                                    @foreach ($seats as $key => $seat)
                                         <tr>
                                             <td class="border-bottom-0 pb-0">
-                                                <h6 class="fw-semibold mb-0">{{ $groupSeats->firstItem() + $key }}</h6>
+                                                <h6 class="fw-semibold mb-0">{{ $seats->firstItem() + $key }}</h6>
                                             </td>
                                             <td class="border-bottom-0 pb-0">
-                                                <p class="mb-0 fw-normal">{{ $groupSeat->name }}</p>
+                                                <p class="mb-0 fw-normal">{{ $seat->name }}</p>
                                             </td>
                                             <td class="border-bottom-0 pb-0">
-                                                <p class="mb-0 fw-normal">{{ $groupSeat->event->name }}</p>
-                                            </td>
-                                            <td class="border-bottom-0 pb-0">
-                                                <p class="mb-0 fw-normal">{{ $groupSeat->schedule->name }}</p>
-                                            </td>
-                                            <td class="border-bottom-0 pb-0">
-                                                <p class="mb-0 fw-normal">Rp. {{ number_format($groupSeat->price, 0) }}
-                                                </p>
-                                            </td>
-                                            <td class="border-bottom-0 pb-0">
-                                                <p class="mb-0 fw-normal">{{ $groupSeat->quota }}</p>
-                                            </td>
-                                            <td class="border-bottom-0 pb-0">
-                                                <p class="mb-0 fw-normal">
-                                                    {{ $groupSeat->quota - $groupSeat->registration_count }}
-                                                </p>
-                                            </td>
-                                            <td class="border-bottom-0 pb-0">
-                                                @if ($groupSeat->is_active)
-                                                    <div class="d-flex align-items-center gap-2">
-                                                        <span class="badge bg-primary rounded-3 fw-semibold">Aktif</span>
-                                                    </div>
-                                                @else
-                                                    <div class="d-flex align-items-center gap-2">
-                                                        <span class="badge bg-danger rounded-3 fw-semibold">Non Aktif</span>
-                                                    </div>
-                                                @endif
+                                                <p class="mb-0 fw-normal">{{ $seat->groupSeat->name }}</p>
                                             </td>
                                             <td class="border-bottom-0 pb-0">
                                                 <div class="d-flex align-items-center gap-2">
-                                                    @can('master.group-seats.edit')
-                                                        <a href="{{ route('group-seats.edit', $groupSeat->id) }}"
+                                                    @can('master.seats.edit')
+                                                        <a href="{{ route('seats.edit', $seat->id) }}"
                                                             class="btn btn-success m-1">
                                                             <i class="ti ti-pencil"></i>
                                                         </a>
                                                     @endcan
 
-                                                    @can('master.group-seats.delete')
+                                                    @can('master.seats.delete')
                                                         <button class="btn btn-danger m-1 btn-delete"
-                                                            data-id="{{ $groupSeat->id }}"
-                                                            data-name="{{ $groupSeat->name }}"><i
+                                                            data-id="{{ $seat->id }}" data-name="{{ $seat->name }}"><i
                                                                 class="ti ti-trash"></i></button>
 
-                                                        <form id="form-delete-group-seat-{{ $groupSeat->id }}" method="POST"
-                                                            action=" {{ route('group-seats.destroy', $groupSeat->id) }}">
+                                                        <form id="form-delete-seat-{{ $seat->id }}" method="POST"
+                                                            action=" {{ route('seats.destroy', $seat->id) }}">
                                                             @csrf
                                                             @method('DELETE')
                                                         </form>
@@ -141,9 +99,9 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="9">
+                                        <td colspan="4">
                                             <div class="alert alert-info text-center" role="alert">
-                                                Grup Kursi Masih Kosong
+                                                Kursi Masih Kosong
                                             </div>
                                         </td>
                                     </tr>
@@ -151,7 +109,7 @@
                             </tbody>
                         </table>
                         <div class="d-flex flex-column justify-content-end my-2">
-                            {{ $groupSeats->links() }}
+                            {{ $seats->links() }}
                         </div>
                     </div>
                 </div>
@@ -173,7 +131,7 @@
             const name = $(this).attr('data-name')
 
             Swal.fire({
-                title: "Yakin Hapus Grup Kursi ?",
+                title: "Yakin Hapus Kursi ?",
                 text: name,
                 icon: "warning",
                 showCancelButton: !0,
@@ -182,7 +140,7 @@
                 closeOnConfirm: !1
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#form-delete-group-seat-' + id).submit()
+                    $('#form-delete-seat-' + id).submit()
                 }
             })
 

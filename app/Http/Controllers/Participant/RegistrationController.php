@@ -29,7 +29,10 @@ class RegistrationController extends Controller
             $objectStd->type = $form->type;
             $objectStd->multiple = $form->multiple;
 
-            $objectStd->model = $form->model_path ? $form->model_path::where('is_active', true)->orderBy('name')->get() : null;
+            $objectStd->model = $form->model_path ? $form->model_path::where('is_active', true)
+                ->where('event_id', $event_id)->orderBy('name')->get()
+                :
+                null;
 
             return $objectStd;
         });
@@ -64,10 +67,18 @@ class RegistrationController extends Controller
 
         try {
             $groupSeat = GroupSeat::select('name', 'quota')->withCount('registration')->where('id', $request->group_seat_id)->first();
-            if(($groupSeat->quota - $groupSeat->registration_count) === 0){
+            $avaliableQuota = $groupSeat->quota - $groupSeat->registration_count;
+            $qty = $request->qty;
+
+
+            if($avaliableQuota === 0){
                 return redirect()
                     ->route('create.registrations.participant', $request->event_id)
-                    ->with('error', 'Kuota shift ' . $groupSeat->name . ' sudah penuh');
+                    ->with('error', 'Kuota Grup Kursi ' . $groupSeat->name . ' sudah penuh');
+            } elseif($avaliableQuota < $qty){
+                return redirect()
+                    ->route('create.registrations.participant', $request->event_id)
+                    ->with('error', 'Kuota Grup Kursi ' . $groupSeat->name . ' hanya tersisa ' . $avaliableQuota);
             }
 
             $participant = Auth::guard('participant')->user();

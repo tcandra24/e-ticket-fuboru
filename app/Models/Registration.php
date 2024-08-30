@@ -28,7 +28,9 @@ class Registration extends Model
         'is_scan',
         'is_vip',
         'is_valid',
-        'token'
+        'token',
+        'qty',
+        'schedule_id',
     ];
 
     protected $with = ['groupSeat', 'job', 'manufacture', 'services'];
@@ -58,9 +60,19 @@ class Registration extends Model
         return $this->belongsToMany(Service::class, 'registration_service');
     }
 
+    public function seats()
+    {
+        return $this->belongsToMany(Seat::class, 'registration_seat');
+    }
+
     public function event()
     {
         return $this->belongsTo(Event::class);
+    }
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
     }
 
     public function receipts()

@@ -87,6 +87,7 @@
                                 <option value="email">Email</option>
                                 <option value="textarea">Text Area</option>
                                 <option value="select">Select Option</option>
+                                <option value="number">Number</option>
                             </select>
                             @error('type')
                                 <span class="text-danger">{{ $message }}</span>

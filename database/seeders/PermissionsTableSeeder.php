@@ -41,6 +41,16 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'master.group-seats.edit', 'guard_name' => 'admin']);
         Permission::create(['name' => 'master.group-seats.delete', 'guard_name' => 'admin']);
 
+        Permission::create(['name' => 'master.seats.index', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'master.seats.create', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'master.seats.edit', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'master.seats.delete', 'guard_name' => 'admin']);
+
+        Permission::create(['name' => 'master.schedules.index', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'master.schedules.create', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'master.schedules.edit', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'master.schedules.delete', 'guard_name' => 'admin']);
+
         Permission::create(['name' => 'transaction.registrations.index', 'guard_name' => 'admin']);
 
         Permission::create(['name' => 'setting.users.index', 'guard_name' => 'admin']);

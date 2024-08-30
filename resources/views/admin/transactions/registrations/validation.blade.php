@@ -28,7 +28,7 @@
             @endif
 
             @if (count($registration->receipts) > 0)
-                <form method="POST"
+                <form method="POST" id="form-upload"
                     action="{{ route('transaction.receipt.update', ['event_id' => $event_id, 'registration_number' => $registration->registration_number]) }}">
                     @csrf
                     @method('PATCH')
@@ -44,10 +44,9 @@
                             </div>
                         @endforeach
                     </div>
-
-                    <button type="submit" class="btn btn-primary"
-                        {{ count($registration->receipts) < 1 ? 'disabled' : '' }}>Validasi</button>
                 </form>
+                <button id="btn-submit" class="btn btn-primary"
+                    {{ count($registration->receipts) < 1 ? 'disabled' : '' }}>Validasi</button>
             @else
                 <div class="alert alert-danger alert-dismissible fade show m-2">
                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
@@ -72,4 +71,23 @@
     <script src="{{ asset('assets/libs/lightbox/js/lightbox.js') }}"></script>
     <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+    <script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script>
+        $('#btn-submit').on('click', function() {
+            Swal.fire({
+                title: "Yakin Validasi Transaksi ?",
+                icon: "warning",
+                showCancelButton: !0,
+                confirmButtonColor: "#5d87ff",
+                confirmButtonText: "Yes",
+                closeOnConfirm: !1
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#form-upload').submit()
+                }
+            })
+
+        })
+    </script>
 @endsection

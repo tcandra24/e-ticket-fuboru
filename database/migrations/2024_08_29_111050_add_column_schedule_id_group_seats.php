@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnRelationMethodName extends Migration
+class AddColumnScheduleIdGroupSeats extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddColumnRelationMethodName extends Migration
      */
     public function up()
     {
-        Schema::table('form_fields', function (Blueprint $table) {
-            $table->string('relation_method_name')->nullable();
+        Schema::table('group_seats', function (Blueprint $table) {
+            $table->unsignedBigInteger('schedule_id');
+
+            $table->foreign('schedule_id')->references('id')->on('schedules');
         });
     }
 
@@ -25,8 +27,8 @@ class AddColumnRelationMethodName extends Migration
      */
     public function down()
     {
-        Schema::table('form_fields', function (Blueprint $table) {
-            $table->dropColumn('relation_method_name');
+        Schema::table('group_seats', function (Blueprint $table) {
+            $table->dropColumn('schedule_id');
         });
     }
 }

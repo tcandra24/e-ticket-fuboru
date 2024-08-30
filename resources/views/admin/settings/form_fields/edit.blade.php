@@ -92,6 +92,8 @@
                                 </option>
                                 <option value="select" {{ $formField->type === 'select' ? 'selected' : '' }}>Select Option
                                 </option>
+                                <option value="number" {{ $formField->type === 'number' ? 'selected' : '' }}>Number
+                                </option>
                             </select>
                             @error('type')
                                 <span class="text-danger">{{ $message }}</span>

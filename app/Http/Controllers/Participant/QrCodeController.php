@@ -12,6 +12,8 @@ use App\Models\Receipt;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 
+use App\Models\Seat;
+
 class QrCodeController extends Controller
 {
     public function index()
@@ -43,7 +45,7 @@ class QrCodeController extends Controller
             $query->where('event_id', $event_id);
         })->get();
 
-        $registration = app($event->model_path)->where('registration_number', $no_registration)->first();
+        $registration = app($event->model_path)->with('seats')->where('registration_number', $no_registration)->first();
 
         $fields = collect([]);
 
@@ -52,6 +54,21 @@ class QrCodeController extends Controller
         $objectStd->value = $registration->registration_number;
 
         $fields->push($objectStd);
+
+        $objectStd = new \stdClass();
+        $objectStd->title = 'Status';
+        $objectStd->value = $registration->is_valid;
+
+        $fields->push($objectStd);
+
+        if(count($registration->seats) > 0){
+            $objectStd = new \stdClass();
+            $objectStd->title = 'Kursi';
+            $objectStd->value = $registration->seats;
+
+            $fields->push($objectStd);
+        }
+
 
         foreach($forms as $form){
             $value = null;
@@ -80,6 +97,7 @@ class QrCodeController extends Controller
             'token' => $registration->token,
             'no_registration' => $registration->registration_number,
             'is_valid' =>$registration->is_valid,
+            'price' =>$registration->groupSeat->price,
             'receiptIsExists' => $receipt->exists(),
             'receipts' => $receipt->get(),
         ]);

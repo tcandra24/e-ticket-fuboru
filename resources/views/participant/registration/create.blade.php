@@ -37,6 +37,15 @@
             padding: 5px !important;
         }
 
+        .btn-light {
+            background-color: #c2c2c2 !important
+        }
+
+        .btn-light:disabled {
+            background-color: #ffffff !important;
+            border-color: #ffffff !important;
+        }
+
         .stage {
             height: 50px;
             background-color: #333;
@@ -53,7 +62,7 @@
         <div class="col-10">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title mb-4">
+                    <h5 class="card-title mb-2">
                         Input Data Registrasi <span class="fw-semibold">{{ $event->name }}</span>
                     </h5>
                     @if (Session::has('error'))
@@ -72,10 +81,23 @@
                         </div>
                     @endif
 
-                    <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal"
-                        data-bs-target="#modal-mapping">
-                        Mapping Tempat Duduk
-                    </button>
+                    <div class="d-flex mb-3">
+                        <div class="col-lg-6">
+                            {!! $event->description !!}
+                            <h4 class="mt-3">
+                                Harga tiket
+                            </h4>
+                            <p class="mb-0">
+                                VVIP : Rp. 350.000
+                                </h6>
+                            <p class="mb-0">
+                                VIP : Rp. 200.000
+                            </p>
+                            <p class="mb-0">
+                                Reguler : 100.000
+                            </p>
+                        </div>
+                    </div>
 
                     <form method="POST" action="{{ route('store.registrations.participant') }}">
                         @csrf
@@ -87,7 +109,7 @@
                                     <div class="mb-3 w-100">
                                         <label for="{{ $form->label }}"
                                             class="form-label">{{ ucwords($form->label) }}</label>
-                                        @if ($form->type === 'text' || $form->type === 'email')
+                                        @if ($form->type === 'text' || $form->type === 'email' || $form->type === 'number')
                                             <input type="{{ $form->type }}" name="{{ $form->name }}"
                                                 class="form-control" id="{{ $form->label }}"
                                                 aria-describedby="{{ $form->label }}"
@@ -113,6 +135,10 @@
                         </div>
                         <button type="submit" class="btn btn-primary btn-submit">Submit</button>
                         <button type="reset" class="btn btn-danger">Reset</button>
+                        <button type="button" class="btn btn-info my-2" data-bs-toggle="modal"
+                            data-bs-target="#modal-mapping">
+                            Mapping Tempat Duduk
+                        </button>
                     </form>
                 </div>
             </div>
@@ -129,6 +155,17 @@
                     <div class="modal-body">
                         <div class="d-flex flex-row p-2 w-100" style="gap: 40px;">
                             <div class="d-flex flex-column bd-highlight" style="gap: 5px;">
+                                <div class="d-flex flex-row bd-highlight" style="gap: 5px; opacity: 0;">
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                </div>
+
                                 <div class="d-flex flex-row bd-highlight justify-content-between" style="gap: 5px;">
                                     <button type="button" class="btn btn-padding btn-reguler">X1</button>
                                     <button type="button" class="btn btn-padding btn-reguler">X2</button>
@@ -330,9 +367,9 @@
                                     <button type="button" class="btn btn-padding btn-light">J3</button>
                                     <button type="button" class="btn btn-padding btn-light">J4</button>
                                     <button type="button" class="btn btn-padding btn-light">J5</button>
-                                    <button type="button" class="btn btn-padding btn-light">J6</button>
-                                    <button type="button" class="btn btn-padding btn-light">J7</button>
-                                    <button type="button" class="btn btn-padding btn-light">J8</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">J6</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">J7</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">J8</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
@@ -341,9 +378,9 @@
                                     <button type="button" class="btn btn-padding btn-light">I3</button>
                                     <button type="button" class="btn btn-padding btn-light">I4</button>
                                     <button type="button" class="btn btn-padding btn-light">I5</button>
-                                    <button type="button" class="btn btn-padding btn-light">I6</button>
-                                    <button type="button" class="btn btn-padding btn-light">I7</button>
-                                    <button type="button" class="btn btn-padding btn-light">I8</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">I6</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">I7</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">I8</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
@@ -352,9 +389,9 @@
                                     <button type="button" class="btn btn-padding btn-light">H3</button>
                                     <button type="button" class="btn btn-padding btn-light">H4</button>
                                     <button type="button" class="btn btn-padding btn-light">H5</button>
-                                    <button type="button" class="btn btn-padding btn-light">H6</button>
-                                    <button type="button" class="btn btn-padding btn-light">H7</button>
-                                    <button type="button" class="btn btn-padding btn-light">H8</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">H6</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">H7</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">H8</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
@@ -363,9 +400,9 @@
                                     <button type="button" class="btn btn-padding btn-light">G3</button>
                                     <button type="button" class="btn btn-padding btn-light">G4</button>
                                     <button type="button" class="btn btn-padding btn-light">G5</button>
-                                    <button type="button" class="btn btn-padding btn-light">G6</button>
-                                    <button type="button" class="btn btn-padding btn-light">G7</button>
-                                    <button type="button" class="btn btn-padding btn-light">G8</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">G6</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">G7</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">G8</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
@@ -374,9 +411,9 @@
                                     <button type="button" class="btn btn-padding btn-light">F3</button>
                                     <button type="button" class="btn btn-padding btn-light">F4</button>
                                     <button type="button" class="btn btn-padding btn-light">F5</button>
-                                    <button type="button" class="btn btn-padding btn-light">F6</button>
-                                    <button type="button" class="btn btn-padding btn-light">F7</button>
-                                    <button type="button" class="btn btn-padding btn-light">F8</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">F6</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">F7</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">F8</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
@@ -384,9 +421,9 @@
                                     <button type="button" class="btn btn-padding btn-light">E2</button>
                                     <button type="button" class="btn btn-padding btn-light">E3</button>
                                     <button type="button" class="btn btn-padding btn-light">E4</button>
-                                    <button type="button" class="btn btn-padding btn-light">E5</button>
-                                    <button type="button" class="btn btn-padding btn-light">E6</button>
-                                    <button type="button" class="btn btn-padding btn-light">E7</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">E5</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">E6</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">E7</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
@@ -431,6 +468,19 @@
                             </div>
                             {{-- =========================== --}}
                             <div class="d-flex flex-column bd-highlight" style="gap: 5px;">
+                                <div class="d-flex flex-row bd-highlight" style="gap: 5px; opacity: 0;">
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                    <button type="button" class="btn">-</button>
+                                </div>
                                 <div class="d-flex flex-row bd-highlight justify-content-between" style="gap: 5px;">
                                     <button type="button" class="btn btn-padding btn-reguler">X11</button>
                                     <button type="button" class="btn btn-padding btn-reguler">X12</button>
@@ -558,6 +608,7 @@
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-reguler">P10</button>
                                     <button type="button" class="btn btn-padding btn-reguler">P11</button>
                                     <button type="button" class="btn btn-padding btn-reguler">P12</button>
                                     <button type="button" class="btn btn-padding btn-reguler">P13</button>
@@ -572,6 +623,7 @@
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-reguler">O10</button>
                                     <button type="button" class="btn btn-padding btn-reguler">O11</button>
                                     <button type="button" class="btn btn-padding btn-reguler">O12</button>
                                     <button type="button" class="btn btn-padding btn-reguler">O13</button>
@@ -586,6 +638,7 @@
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-light">N10</button>
                                     <button type="button" class="btn btn-padding btn-light">N11</button>
                                     <button type="button" class="btn btn-padding btn-light">N12</button>
                                     <button type="button" class="btn btn-padding btn-light">N13</button>
@@ -600,6 +653,7 @@
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-light">M10</button>
                                     <button type="button" class="btn btn-padding btn-light">M11</button>
                                     <button type="button" class="btn btn-padding btn-light">M12</button>
                                     <button type="button" class="btn btn-padding btn-light">M13</button>
@@ -614,6 +668,9 @@
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-light">L8</button>
+                                    <button type="button" class="btn btn-padding btn-light">L9</button>
+                                    <button type="button" class="btn btn-padding btn-light">L10</button>
                                     <button type="button" class="btn btn-padding btn-light">L11</button>
                                     <button type="button" class="btn btn-padding btn-light">L12</button>
                                     <button type="button" class="btn btn-padding btn-light">L13</button>
@@ -623,11 +680,12 @@
                                     <button type="button" class="btn btn-padding btn-light">L17</button>
                                     <button type="button" class="btn btn-padding btn-light">L18</button>
                                     <button type="button" class="btn btn-padding btn-light">L19</button>
-                                    <button type="button" class="btn btn-padding btn-light">L20</button>
-                                    <button type="button" class="btn btn-padding btn-light">L21</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-light">K8</button>
+                                    <button type="button" class="btn btn-padding btn-light">K9</button>
+                                    <button type="button" class="btn btn-padding btn-light">K10</button>
                                     <button type="button" class="btn btn-padding btn-light">K11</button>
                                     <button type="button" class="btn btn-padding btn-light">K12</button>
                                     <button type="button" class="btn btn-padding btn-light">K13</button>
@@ -637,8 +695,6 @@
                                     <button type="button" class="btn btn-padding btn-light">K17</button>
                                     <button type="button" class="btn btn-padding btn-light">K18</button>
                                     <button type="button" class="btn btn-padding btn-light">K19</button>
-                                    <button type="button" class="btn btn-padding btn-light">K20</button>
-                                    <button type="button" class="btn btn-padding btn-light">K21</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight" style="gap: 5px; opacity: 0;">
@@ -670,6 +726,8 @@
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">J9</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">J10</button>
                                     <button type="button" class="btn btn-padding btn-vvip">J11</button>
                                     <button type="button" class="btn btn-padding btn-vvip">J12</button>
                                     <button type="button" class="btn btn-padding btn-vvip">J13</button>
@@ -680,11 +738,11 @@
                                     <button type="button" class="btn btn-padding btn-vvip">J18</button>
                                     <button type="button" class="btn btn-padding btn-vvip">J19</button>
                                     <button type="button" class="btn btn-padding btn-vvip">J20</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">J21</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">J22</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">I9</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">I10</button>
                                     <button type="button" class="btn btn-padding btn-vvip">I11</button>
                                     <button type="button" class="btn btn-padding btn-vvip">I12</button>
                                     <button type="button" class="btn btn-padding btn-vvip">I13</button>
@@ -695,11 +753,11 @@
                                     <button type="button" class="btn btn-padding btn-vvip">I18</button>
                                     <button type="button" class="btn btn-padding btn-vvip">I19</button>
                                     <button type="button" class="btn btn-padding btn-vvip">I20</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">I21</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">I22</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">H9</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">H10</button>
                                     <button type="button" class="btn btn-padding btn-vvip">H11</button>
                                     <button type="button" class="btn btn-padding btn-vvip">H12</button>
                                     <button type="button" class="btn btn-padding btn-vvip">H13</button>
@@ -710,11 +768,11 @@
                                     <button type="button" class="btn btn-padding btn-vvip">H18</button>
                                     <button type="button" class="btn btn-padding btn-vvip">H19</button>
                                     <button type="button" class="btn btn-padding btn-vvip">H20</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">H21</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">H22</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">G9</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">G10</button>
                                     <button type="button" class="btn btn-padding btn-vvip">G11</button>
                                     <button type="button" class="btn btn-padding btn-vvip">G12</button>
                                     <button type="button" class="btn btn-padding btn-vvip">G13</button>
@@ -725,11 +783,11 @@
                                     <button type="button" class="btn btn-padding btn-vvip">G18</button>
                                     <button type="button" class="btn btn-padding btn-vvip">G19</button>
                                     <button type="button" class="btn btn-padding btn-vvip">G20</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">G21</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">G22</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">F9</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">F10</button>
                                     <button type="button" class="btn btn-padding btn-vvip">F11</button>
                                     <button type="button" class="btn btn-padding btn-vvip">F12</button>
                                     <button type="button" class="btn btn-padding btn-vvip">F13</button>
@@ -740,11 +798,12 @@
                                     <button type="button" class="btn btn-padding btn-vvip">F18</button>
                                     <button type="button" class="btn btn-padding btn-vvip">F19</button>
                                     <button type="button" class="btn btn-padding btn-vvip">F20</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">F21</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">F22</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">E8</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">E9</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">E10</button>
                                     <button type="button" class="btn btn-padding btn-vvip">E11</button>
                                     <button type="button" class="btn btn-padding btn-vvip">E12</button>
                                     <button type="button" class="btn btn-padding btn-vvip">E13</button>
@@ -753,12 +812,12 @@
                                     <button type="button" class="btn btn-padding btn-vvip">E16</button>
                                     <button type="button" class="btn btn-padding btn-vvip">E17</button>
                                     <button type="button" class="btn btn-padding btn-vvip">E18</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">E19</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">E20</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">E21</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">D8</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">D9</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">D10</button>
                                     <button type="button" class="btn btn-padding btn-vvip">D11</button>
                                     <button type="button" class="btn btn-padding btn-vvip">D12</button>
                                     <button type="button" class="btn btn-padding btn-vvip">D13</button>
@@ -767,12 +826,12 @@
                                     <button type="button" class="btn btn-padding btn-vvip">D16</button>
                                     <button type="button" class="btn btn-padding btn-vvip">D17</button>
                                     <button type="button" class="btn btn-padding btn-vvip">D18</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">D19</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">D20</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">D21</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">C8</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">C9</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">C10</button>
                                     <button type="button" class="btn btn-padding btn-vvip">C11</button>
                                     <button type="button" class="btn btn-padding btn-vvip">C12</button>
                                     <button type="button" class="btn btn-padding btn-vvip">C13</button>
@@ -781,12 +840,12 @@
                                     <button type="button" class="btn btn-padding btn-vvip">C16</button>
                                     <button type="button" class="btn btn-padding btn-vvip">C17</button>
                                     <button type="button" class="btn btn-padding btn-vvip">C18</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">C19</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">C20</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">C21</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-secondary">B8</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">B9</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">B10</button>
                                     <button type="button" class="btn btn-padding btn-secondary">B11</button>
                                     <button type="button" class="btn btn-padding btn-secondary">B12</button>
                                     <button type="button" class="btn btn-padding btn-secondary">B13</button>
@@ -795,12 +854,12 @@
                                     <button type="button" class="btn btn-padding btn-secondary">B16</button>
                                     <button type="button" class="btn btn-padding btn-secondary">B17</button>
                                     <button type="button" class="btn btn-padding btn-secondary">B18</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">B19</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">B20</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">B21</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-secondary">A8</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">A9</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">A10</button>
                                     <button type="button" class="btn btn-padding btn-secondary">A11</button>
                                     <button type="button" class="btn btn-padding btn-secondary">A12</button>
                                     <button type="button" class="btn btn-padding btn-secondary">A13</button>
@@ -809,9 +868,6 @@
                                     <button type="button" class="btn btn-padding btn-secondary">A16</button>
                                     <button type="button" class="btn btn-padding btn-secondary">A17</button>
                                     <button type="button" class="btn btn-padding btn-secondary">A18</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">A19</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">A20</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">A21</button>
                                 </div>
 
                                 <div class="w-100 mt-5">
@@ -820,6 +876,18 @@
                             </div>
                             {{-- ===================== --}}
                             <div class="d-flex flex-column bd-highlight" style="gap: 5px;">
+                                <div class="d-flex flex-row bd-highlight justify-content-between" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-reguler">Y24</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">Y25</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">Y26</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">Y27</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">Y28</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">Y29</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">Y30</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">Y31</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">Y32</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">Y33</button>
+                                </div>
                                 <div class="d-flex flex-row bd-highlight justify-content-between" style="gap: 5px;">
                                     <button type="button" class="btn btn-padding btn-reguler">X24</button>
                                     <button type="button" class="btn btn-padding btn-reguler">X25</button>
@@ -924,6 +992,8 @@
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-reguler">P22</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">P23</button>
                                     <button type="button" class="btn btn-padding btn-reguler">P24</button>
                                     <button type="button" class="btn btn-padding btn-reguler">P25</button>
                                     <button type="button" class="btn btn-padding btn-reguler">P26</button>
@@ -931,12 +1001,11 @@
                                     <button type="button" class="btn btn-padding btn-reguler">P28</button>
                                     <button type="button" class="btn btn-padding btn-reguler">P29</button>
                                     <button type="button" class="btn btn-padding btn-reguler">P30</button>
-                                    <button type="button" class="btn btn-padding btn-reguler">P31</button>
-                                    <button type="button" class="btn btn-padding btn-reguler">P32</button>
-                                    <button type="button" class="btn btn-padding btn-reguler">P33</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-reguler">O22</button>
+                                    <button type="button" class="btn btn-padding btn-reguler">O23</button>
                                     <button type="button" class="btn btn-padding btn-reguler">O24</button>
                                     <button type="button" class="btn btn-padding btn-reguler">O25</button>
                                     <button type="button" class="btn btn-padding btn-reguler">O26</button>
@@ -944,12 +1013,11 @@
                                     <button type="button" class="btn btn-padding btn-reguler">O28</button>
                                     <button type="button" class="btn btn-padding btn-reguler">O29</button>
                                     <button type="button" class="btn btn-padding btn-reguler">O30</button>
-                                    <button type="button" class="btn btn-padding btn-reguler">O31</button>
-                                    <button type="button" class="btn btn-padding btn-reguler">O32</button>
-                                    <button type="button" class="btn btn-padding btn-reguler">O33</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-light">N22</button>
+                                    <button type="button" class="btn btn-padding btn-light">N23</button>
                                     <button type="button" class="btn btn-padding btn-light">N24</button>
                                     <button type="button" class="btn btn-padding btn-light">N25</button>
                                     <button type="button" class="btn btn-padding btn-light">N26</button>
@@ -957,12 +1025,11 @@
                                     <button type="button" class="btn btn-padding btn-light">N28</button>
                                     <button type="button" class="btn btn-padding btn-light">N29</button>
                                     <button type="button" class="btn btn-padding btn-light">N30</button>
-                                    <button type="button" class="btn btn-padding btn-light">N31</button>
-                                    <button type="button" class="btn btn-padding btn-light">N32</button>
-                                    <button type="button" class="btn btn-padding btn-light">N33</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-light">M22</button>
+                                    <button type="button" class="btn btn-padding btn-light">M23</button>
                                     <button type="button" class="btn btn-padding btn-light">M24</button>
                                     <button type="button" class="btn btn-padding btn-light">M25</button>
                                     <button type="button" class="btn btn-padding btn-light">M26</button>
@@ -970,48 +1037,42 @@
                                     <button type="button" class="btn btn-padding btn-light">M28</button>
                                     <button type="button" class="btn btn-padding btn-light">M29</button>
                                     <button type="button" class="btn btn-padding btn-light">M30</button>
-                                    <button type="button" class="btn btn-padding btn-light">M31</button>
-                                    <button type="button" class="btn btn-padding btn-light">M32</button>
-                                    <button type="button" class="btn btn-padding btn-light">M33</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-light">L20</button>
+                                    <button type="button" class="btn btn-padding btn-light">L21</button>
+                                    <button type="button" class="btn btn-padding btn-light">L22</button>
+                                    <button type="button" class="btn btn-padding btn-light">L23</button>
                                     <button type="button" class="btn btn-padding btn-light">L24</button>
                                     <button type="button" class="btn btn-padding btn-light">L25</button>
                                     <button type="button" class="btn btn-padding btn-light">L26</button>
                                     <button type="button" class="btn btn-padding btn-light">L27</button>
                                     <button type="button" class="btn btn-padding btn-light">L28</button>
-                                    <button type="button" class="btn btn-padding btn-light">L29</button>
-                                    <button type="button" class="btn btn-padding btn-light">L30</button>
-                                    <button type="button" class="btn btn-padding btn-light">L31</button>
-                                    <button type="button" class="btn btn-padding btn-light">L32</button>
-                                    <button type="button" class="btn btn-padding btn-light">L33</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-light">K20</button>
+                                    <button type="button" class="btn btn-padding btn-light">K21</button>
+                                    <button type="button" class="btn btn-padding btn-light">K22</button>
+                                    <button type="button" class="btn btn-padding btn-light">K23</button>
                                     <button type="button" class="btn btn-padding btn-light">K24</button>
                                     <button type="button" class="btn btn-padding btn-light">K25</button>
                                     <button type="button" class="btn btn-padding btn-light">K26</button>
                                     <button type="button" class="btn btn-padding btn-light">K27</button>
                                     <button type="button" class="btn btn-padding btn-light">K28</button>
-                                    <button type="button" class="btn btn-padding btn-light">K29</button>
-                                    <button type="button" class="btn btn-padding btn-light">K30</button>
-                                    <button type="button" class="btn btn-padding btn-light">K31</button>
-                                    <button type="button" class="btn btn-padding btn-light">K32</button>
-                                    <button type="button" class="btn btn-padding btn-light">K33</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-light">JA21</button>
+                                    <button type="button" class="btn btn-padding btn-light">JA22</button>
+                                    <button type="button" class="btn btn-padding btn-light">JA23</button>
                                     <button type="button" class="btn btn-padding btn-light">JA24</button>
                                     <button type="button" class="btn btn-padding btn-light">JA25</button>
                                     <button type="button" class="btn btn-padding btn-light">JA26</button>
                                     <button type="button" class="btn btn-padding btn-light">JA27</button>
                                     <button type="button" class="btn btn-padding btn-light">JA28</button>
                                     <button type="button" class="btn btn-padding btn-light">JA29</button>
-                                    <button type="button" class="btn btn-padding btn-light">JA30</button>
-                                    <button type="button" class="btn btn-padding btn-light">JA31</button>
-                                    <button type="button" class="btn btn-padding btn-light">JA32</button>
-                                    <button type="button" class="btn btn-padding btn-light">JA33</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight" style="gap: 5px; opacity: 0;">
@@ -1028,108 +1089,108 @@
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">J21</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">J22</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">J23</button>
                                     <button type="button" class="btn btn-padding btn-light">J24</button>
                                     <button type="button" class="btn btn-padding btn-light">J25</button>
                                     <button type="button" class="btn btn-padding btn-light">J26</button>
                                     <button type="button" class="btn btn-padding btn-light">J27</button>
                                     <button type="button" class="btn btn-padding btn-light">J28</button>
-                                    <button type="button" class="btn btn-padding btn-light">J29</button>
-                                    <button type="button" class="btn btn-padding btn-light">J30</button>
-                                    <button type="button" class="btn btn-padding btn-light">J31</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">I21</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">I22</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">I23</button>
                                     <button type="button" class="btn btn-padding btn-light">I24</button>
                                     <button type="button" class="btn btn-padding btn-light">I25</button>
                                     <button type="button" class="btn btn-padding btn-light">I26</button>
                                     <button type="button" class="btn btn-padding btn-light">I27</button>
                                     <button type="button" class="btn btn-padding btn-light">I28</button>
-                                    <button type="button" class="btn btn-padding btn-light">I29</button>
-                                    <button type="button" class="btn btn-padding btn-light">I30</button>
-                                    <button type="button" class="btn btn-padding btn-light">I31</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">H21</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">H22</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">H23</button>
                                     <button type="button" class="btn btn-padding btn-light">H24</button>
                                     <button type="button" class="btn btn-padding btn-light">H25</button>
                                     <button type="button" class="btn btn-padding btn-light">H26</button>
                                     <button type="button" class="btn btn-padding btn-light">H27</button>
                                     <button type="button" class="btn btn-padding btn-light">H28</button>
-                                    <button type="button" class="btn btn-padding btn-light">H29</button>
-                                    <button type="button" class="btn btn-padding btn-light">H30</button>
-                                    <button type="button" class="btn btn-padding btn-light">H31</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">G21</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">G22</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">G23</button>
                                     <button type="button" class="btn btn-padding btn-light">G24</button>
                                     <button type="button" class="btn btn-padding btn-light">G25</button>
                                     <button type="button" class="btn btn-padding btn-light">G26</button>
                                     <button type="button" class="btn btn-padding btn-light">G27</button>
                                     <button type="button" class="btn btn-padding btn-light">G28</button>
-                                    <button type="button" class="btn btn-padding btn-light">G29</button>
-                                    <button type="button" class="btn btn-padding btn-light">G30</button>
-                                    <button type="button" class="btn btn-padding btn-light">G31</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">F21</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">F22</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">F23</button>
                                     <button type="button" class="btn btn-padding btn-light">F24</button>
                                     <button type="button" class="btn btn-padding btn-light">F25</button>
                                     <button type="button" class="btn btn-padding btn-light">F26</button>
                                     <button type="button" class="btn btn-padding btn-light">F27</button>
                                     <button type="button" class="btn btn-padding btn-light">F28</button>
-                                    <button type="button" class="btn btn-padding btn-light">F29</button>
-                                    <button type="button" class="btn btn-padding btn-light">F30</button>
-                                    <button type="button" class="btn btn-padding btn-light">F31</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">E19</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">E20</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">E21</button>
+                                    <button type="button" class="btn btn-padding btn-light">E22</button>
+                                    <button type="button" class="btn btn-padding btn-light">E23</button>
                                     <button type="button" class="btn btn-padding btn-light">E24</button>
                                     <button type="button" class="btn btn-padding btn-light">E25</button>
-                                    <button type="button" class="btn btn-padding btn-light">E26</button>
-                                    <button type="button" class="btn btn-padding btn-light">E27</button>
-                                    <button type="button" class="btn btn-padding btn-light">E28</button>
-                                    <button type="button" class="btn btn-padding btn-light">E29</button>
-                                    <button type="button" class="btn btn-padding btn-light">E30</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">D19</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">D20</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">D21</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">D22</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">D23</button>
                                     <button type="button" class="btn btn-padding btn-vvip">D24</button>
                                     <button type="button" class="btn btn-padding btn-vvip">D25</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">D26</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">D27</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">D28</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">D29</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">D30</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-vvip">C19</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">C20</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">C21</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">C22</button>
+                                    <button type="button" class="btn btn-padding btn-vvip">C23</button>
                                     <button type="button" class="btn btn-padding btn-vvip">C24</button>
                                     <button type="button" class="btn btn-padding btn-vvip">C25</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">C26</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">C27</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">C28</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">C29</button>
-                                    <button type="button" class="btn btn-padding btn-vvip">C30</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-secondary">B19</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">B20</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">B21</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">B22</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">B23</button>
                                     <button type="button" class="btn btn-padding btn-secondary">B24</button>
                                     <button type="button" class="btn btn-padding btn-secondary">B25</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">B26</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">B27</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">B28</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">B29</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">B30</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
+                                    <button type="button" class="btn btn-padding btn-secondary">A19</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">A20</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">A21</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">A22</button>
+                                    <button type="button" class="btn btn-padding btn-secondary">A23</button>
                                     <button type="button" class="btn btn-padding btn-secondary">A24</button>
                                     <button type="button" class="btn btn-padding btn-secondary">A25</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">A26</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">A27</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">A28</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">A29</button>
-                                    <button type="button" class="btn btn-padding btn-secondary">A30</button>
                                 </div>
 
                             </div>

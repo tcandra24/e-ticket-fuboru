@@ -189,6 +189,10 @@
 
                                                 <td class="border-bottom-0 pb-0">
                                                     <div class="d-flex align-items-center gap-2">
+                                                        <a class="btn btn-primary m-1"
+                                                            href="{{ route('transaction.registrations.detail', ['event_id' => $event, 'registration_number' => $registration->registration_number]) }}">
+                                                            <i class="ti ti-eye"></i>
+                                                        </a>
                                                         <button class="btn btn-danger m-1 btn-delete"
                                                             data-id="{{ $registration->id }}"
                                                             data-name="{{ $registration->fullname }}">

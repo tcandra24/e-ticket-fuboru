@@ -13,7 +13,9 @@ class GroupSeat extends Model
         'name',
         'quota',
         'event_id',
-        'is_active'
+        'is_active',
+        'schedule_id',
+        'price'
     ];
 
     public function registration()
@@ -24,6 +26,16 @@ class GroupSeat extends Model
     public function event()
     {
         return $this->belongsTo(Event::class);
+    }
+
+    public function seats()
+    {
+        return $this->hasMany(Seat::class);
+    }
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
     }
 
     public function getNameAttribute($value)

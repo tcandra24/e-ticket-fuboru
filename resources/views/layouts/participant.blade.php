@@ -33,6 +33,9 @@
                     </li>
                 </ul>
             </div>
+            <div class="mx-2">
+                <h4>{{ ucwords(strtolower(auth()->guard('participant')->user()->name)) }}</h4>
+            </div>
             <button class="btn btn-danger mx-3" type="button" id="btn-participant-logout">Logout</button>
             <form method="POST" id="form-participant-logout" action="{{ route('logout.participant') }}">
                 @csrf
