@@ -106,7 +106,7 @@ class RegistrationController extends Controller
                 $registration->services()->attach($services);
             }
 
-            return redirect()->route('participant.index')->with('success', 'Registrasi Berhasil Disimpan');
+            return redirect()->route('show.qr-code.participant', ['event_id' => $request->event_id, 'no_registration' => $registration->registration_number])->with('success', 'Registrasi Berhasil Disimpan');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
