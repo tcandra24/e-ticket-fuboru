@@ -33,7 +33,7 @@ class Registration extends Model
         'schedule_id',
     ];
 
-    protected $with = ['groupSeat', 'job', 'manufacture', 'services'];
+    protected $with = ['groupSeat', 'job', 'manufacture', 'services', 'seats'];
 
     public function groupSeat()
     {

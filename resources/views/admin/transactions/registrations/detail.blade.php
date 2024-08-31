@@ -154,7 +154,6 @@
                                 <button type="button" class="btn btn-light">VIP</button>
                                 <button type="button" class="btn btn-vvip">VVIP</button>
                                 <button type="button" class="btn btn-secondary">Undangan</button>
-                                <button class="btn" id="test-btn">Coba</button>
                             </div>
                         </div>
                     </div>

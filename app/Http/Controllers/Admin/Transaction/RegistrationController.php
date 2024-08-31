@@ -59,6 +59,14 @@ class RegistrationController extends Controller
                 'is_multiple' => false,
             ]);
 
+            array_push($objectFields, [
+                'name' => 'seats',
+                'label' => 'Kursi',
+                'model_path' => '\App\Models\RegistrationSeat',
+                'relation_method_name' => 'seats',
+                'is_multiple' => true,
+            ]);
+
             array_unshift($objectFields, [
                 'name' => 'registration_number',
                 'label' => 'Nomer Registrasi',
