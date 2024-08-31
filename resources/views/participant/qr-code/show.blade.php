@@ -146,6 +146,14 @@
                                             <p>Rp. {{ number_format($price + 1) }}</p>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <span>
+                                            <i> Silahkan Transfer Tagihan Ke Rek Ini BCA <strong>8620726002</strong> Atas
+                                                Nama
+                                                <strong>BGKP Santo Yakobus</strong>
+                                            </i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -205,12 +213,6 @@
 
                             <span>
                                 <p> Mohon upload file berjenis png, jpg atau jpeg</p>
-                            </span>
-
-                            <span>
-                                <p> Silahkan Transfer Tagihan Ke Rek Ini BCA <strong>8620726002</strong> Atas Nama
-                                    <strong>BGKP Santo Yakobus</strong>
-                                </p>
                             </span>
 
                             <button type="submit" class="btn btn-primary btn-submit">Submit</button>
