@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row">
                         @foreach ($events as $event)
-                            <div class="col-sm-6 col-xl-6">
+                            <div class="col-sm-6 col-xl-4">
                                 <div class="card overflow-hidden rounded-2">
                                     <div class="position-relative">
                                         <a href="{{ route('transaction.registrations.show', $event->id) }}">

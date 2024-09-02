@@ -17,7 +17,7 @@
     <div class="page-wrapper" id="main-wrapper">
         <nav class="navbar navbar-expand-lg px-2">
             <a class="navbar-brand text-nowrap logo-img" href="{{ route('participant.index') }}">
-                <img src="{{ asset('assets/images/logo.png') }}" width="180" alt="">
+                <img src="{{ asset('assets/images/logo.png') }}" width="120" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

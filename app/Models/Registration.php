@@ -31,6 +31,8 @@ class Registration extends Model
         'token',
         'qty',
         'schedule_id',
+        'price',
+        'total',
     ];
 
     protected $with = ['groupSeat', 'job', 'manufacture', 'services', 'seats'];

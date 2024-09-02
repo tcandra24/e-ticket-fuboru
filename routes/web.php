@@ -103,9 +103,11 @@ Route::prefix('admin')->group(function() {
                 'index' => 'transaction.participants.index'
             ]);
 
-
             Route::get('/receipt/{event_id}/{registration_number}', [ \App\Http\Controllers\Admin\Transaction\ReceiptController::class, 'show' ])->name('transaction.receipt.show');
             Route::patch('/receipt/{event_id}/{registration_number}', [ \App\Http\Controllers\Admin\Transaction\ReceiptController::class, 'update' ])->name('transaction.receipt.update');
+
+            Route::get('/registration-manual/create/{event_id}', [ \App\Http\Controllers\Admin\Transaction\RegistrationController::class, 'create' ])->name('transaction.registrations.create');
+            Route::post('/registration-manual/{event_id}', [ \App\Http\Controllers\Admin\Transaction\RegistrationController::class, 'store' ])->name('transaction.registrations.store');
 
             Route::delete('/registration/{event_id}/{registration_number}', [ \App\Http\Controllers\Admin\Transaction\RegistrationController::class, 'destroy' ])->name('transaction.registrations.delete');
             Route::patch('/registration/{event_id}/{registration_number}', [ \App\Http\Controllers\Admin\Transaction\RegistrationController::class, 'update' ])->name('transaction.registrations.update');

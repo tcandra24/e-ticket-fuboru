@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\Seat;
+use Carbon\Carbon;
 
 class QrCodeController extends Controller
 {
@@ -76,7 +77,11 @@ class QrCodeController extends Controller
                 if ($form->multiple) {
                     $value = $registration->{$form->relation_method_name};
                 } else {
-                    $value = $registration->{$form->relation_method_name}->name;
+                    if($form->relation_method_name === 'schedule'){
+                        $value = Carbon::parse($registration->{$form->relation_method_name}->date)->format('l, d F Y');
+                    } else {
+                        $value = $registration->{$form->relation_method_name}->name;
+                    }
                 }
             } else {
                 $value = $registration->{$form->name};
@@ -97,7 +102,9 @@ class QrCodeController extends Controller
             'token' => $registration->token,
             'no_registration' => $registration->registration_number,
             'is_valid' =>$registration->is_valid,
-            'price' =>$registration->groupSeat->price,
+            'price' =>$registration->price,
+            'total' =>$registration->total,
+            'qty' =>$registration->qty,
             'receiptIsExists' => $receipt->exists(),
             'receipts' => $receipt->get(),
         ]);

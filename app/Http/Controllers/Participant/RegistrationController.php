@@ -13,7 +13,6 @@ use Carbon\Carbon;
 
 use App\Models\Event;
 use App\Models\FormField;
-use App\Models\Service;
 use App\Models\GroupSeat;
 
 class RegistrationController extends Controller
@@ -66,7 +65,7 @@ class RegistrationController extends Controller
         $request->validate($rules, $ruleMessage);
 
         try {
-            $groupSeat = GroupSeat::select('name', 'quota')->withCount('registration')->where('id', $request->group_seat_id)->first();
+            $groupSeat = GroupSeat::select('name', 'quota', 'price')->withCount('registration')->where('id', $request->group_seat_id)->first();
             $avaliableQuota = $groupSeat->quota - $groupSeat->registration_count;
             $qty = $request->qty;
 
@@ -97,14 +96,11 @@ class RegistrationController extends Controller
             $inputField['registration_number'] = $registration_number;
             $inputField['participant_id'] = $participant->id;
             $inputField['event_id'] = $request->event_id;
+            $inputField['price'] = $groupSeat->price;
+            $inputField['total'] = $request->qty * $groupSeat->price;
             $inputField['token'] = $token;
 
             $registration = app($event->model_path)->create($inputField);
-
-            if($request->services){
-                $services = Service::select('id')->whereIn('id', $request->services)->get();
-                $registration->services()->attach($services);
-            }
 
             return redirect()->route('show.qr-code.participant', ['event_id' => $request->event_id, 'no_registration' => $registration->registration_number])->with('success', 'Registrasi Berhasil Disimpan');
         } catch (\Exception $e) {

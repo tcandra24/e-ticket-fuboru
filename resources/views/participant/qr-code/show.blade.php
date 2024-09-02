@@ -26,7 +26,7 @@
                                     <div class="d-flex justify-content-center">
                                         <div class="d-flex flex-column">
                                             <img src="{{ asset('/storage/qr-codes/qr-code-' . $token . '.svg') }}"
-                                                width="300" height="300" alt="">
+                                                width="250" height="250" alt="">
                                             <a href="{{ route('download.qr-code.participant', ['event_id' => $event->id, 'no_registration' => $no_registration]) }}"
                                                 target="_blank" rel=”nofollow” class="btn btn-primary mt-3">
                                                 Download
@@ -90,8 +90,8 @@
                                             <div class="d-block w-100 my-2">
                                                 <div class="d-flex justify-content-center">
                                                     <div class="d-flex flex-column">
-                                                        <img src="{{ asset('/storage/qr-codes/dummy.png') }}" width="300"
-                                                            style=" filter: blur(15px);" height="300" alt="">
+                                                        <img src="{{ asset('/storage/qr-codes/dummy.png') }}" width="250"
+                                                            style=" filter: blur(15px);" height="250" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,7 +131,7 @@
                                     <div class="row">
                                         <div class="d-flex justify-content-between">
                                             <h6>Harga</h6>
-                                            <p>Rp. {{ number_format($price, 0) }}</p>
+                                            <p>{{ $qty }} x Rp. {{ number_format($price, 0) }}</p>
                                         </div>
 
                                         <div class="d-flex justify-content-between">
@@ -143,7 +143,7 @@
 
                                         <div class="d-flex justify-content-between">
                                             <h6>Total</h6>
-                                            <p>Rp. {{ number_format($price + 1) }}</p>
+                                            <p>Rp. {{ number_format($total + 1) }}</p>
                                         </div>
                                     </div>
                                     <div class="row">

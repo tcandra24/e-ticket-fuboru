@@ -100,8 +100,9 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-6 d-flex flex-row" style="gap: 10px;">
+                            <a href="{{ route('transaction.registrations.create', $event->id) }}"
+                                class="btn btn-primary">Tambah</a>
                             <a href="{{ route('transaction.trash.show', $event) }}" class="btn btn-warning">Sampah</a>
-                            {{-- <a href="#" class="btn btn-secondary">Ketersediaan Kursi</a> --}}
                         </div>
                     </div>
                     <div class="row">
