@@ -120,7 +120,13 @@
                                                 id="{{ $form->label }}" {{ $form->multiple ? 'multiple' : '' }}>
                                                 <option value="">Pilih {{ $form->label }}</option>
                                                 @foreach ($form->model as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                    <option value="{{ $data->id }}">
+                                                        @if ($form->label === 'Jadwal')
+                                                            {{ \Carbon\Carbon::parse($data->date)->format('l, d F Y') }}
+                                                        @else
+                                                            {{ $data->name }}
+                                                        @endif
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         @elseif($form->type === 'textarea')
