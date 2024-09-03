@@ -36,6 +36,7 @@ class RegistrationController extends Controller
             })];
 
             array_push($fields, 'is_scan');
+            array_push($fields, 'is_valid');
 
             $objectFields = [...$allForm->map(function($item){
                 return [
@@ -49,6 +50,22 @@ class RegistrationController extends Controller
             array_push($objectFields, [
                 'name' => 'is_scan',
                 'label' => 'Status Scan',
+                'model_path' => null,
+                'relation_method_name' => null,
+                'is_multiple' => false,
+            ]);
+
+            array_push($objectFields, [
+                'name' => 'is_valid',
+                'label' => 'Status Verifikasi',
+                'model_path' => null,
+                'relation_method_name' => null,
+                'is_multiple' => false,
+            ]);
+
+            array_unshift($objectFields, [
+                'name' => 'registration_number',
+                'label' => 'Nomer Registrasi',
                 'model_path' => null,
                 'relation_method_name' => null,
                 'is_multiple' => false,
