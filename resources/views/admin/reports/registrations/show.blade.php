@@ -70,16 +70,31 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 d-flex align-items-stretch">
+                                <div class="col-lg-2 d-flex align-items-stretch">
                                     <div class="mb-3 w-100">
-                                        <div class="d-flex">
-                                            <button type="submit" class="btn btn-primary">Cari</button>
+                                        <label for="valid" class="form-label">Status Verifikasi</label>
+                                        <select name="valid" class="form-control" id="valid" aria-describedby="valid">
+                                            <option value="">Semua Verifikasi</option>
+                                            <option value="false"
+                                                {{ request()->has('valid') && request()->valid === 'false' ? 'selected' : '' }}>
+                                                Belum Terverifikasi
+                                            </option>
+                                            <option value="true"
+                                                {{ request()->has('valid') && request()->valid === 'true' ? 'selected' : '' }}>
+                                                Sudah Terverifikasi
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 d-flex align-items-stretch">
+                                        <div class="mb-3 w-100">
+                                            <div class="d-flex">
+                                                <button type="submit" class="btn btn-primary">Cari</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </form>
                     </div>
                     <div class="row">
@@ -187,6 +202,10 @@
 
     <script>
         $('#scan').select2({
+            theme: 'bootstrap-5'
+        })
+
+        $('#valid').select2({
             theme: 'bootstrap-5'
         })
 

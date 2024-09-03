@@ -65,8 +65,8 @@ class RegistrationController extends Controller
             }) ->when(request()->scan, function($query){
                 $query->where('is_scan', request()->scan == 'true' ? true : false);
             })
-            ->when(request()->shift, function($query){
-                $query->where('shift_id', request()->shift);
+            ->when(request()->valid, function($query){
+                $query->where('is_valid', request()->valid == 'true' ? true : false);
             })
             ->where('event_id', $id)->paginate(10);
 
