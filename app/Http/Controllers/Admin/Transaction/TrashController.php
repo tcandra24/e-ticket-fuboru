@@ -77,9 +77,9 @@ class TrashController extends Controller
             $event = Event::where('id', $event_id)->first();
             app($event->model_path)->onlyTrashed()->where('event_id', $event_id)->where('registration_number', $registration_number)->restore();
 
-            return redirect()->route('transaction.trash.show', $event)->with('success', 'Data Registrasi Berhasil Dipulihkan');
+            return redirect()->route('transaction.trash.show', $event_id)->with('success', 'Data Registrasi Berhasil Dipulihkan');
         } catch (\Exception $e) {
-            return redirect()->route('transaction.trash.show', $event)->with('error', $e->getMessage());
+            return redirect()->route('transaction.trash.show', $event_id)->with('error', $e->getMessage());
         }
     }
 }

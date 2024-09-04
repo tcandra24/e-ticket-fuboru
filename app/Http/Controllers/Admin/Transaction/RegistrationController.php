@@ -121,9 +121,6 @@ class RegistrationController extends Controller
 
             $registration = app($event->model_path)->create($inputField);
 
-            // $seats = Seat::select('id')->whereIn('id', $request->seats)->get();
-            // $registration->seats()->sync($seats);
-
             return redirect()->route('transaction.registrations.detail', ['event_id' =>  $request->event_id, 'registration_number' => $registration->registration_number])->with('success', 'Registrasi Berhasil Disimpan');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());

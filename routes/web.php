@@ -145,6 +145,6 @@ Route::prefix('admin')->group(function() {
 });
 
 Route::prefix('testing')->group(function() {
-    Route::get('/', App\Http\Controllers\Admin\Testing\SandboxController::class)->name('testing.index');
+    Route::get('/', [App\Http\Controllers\Sandbox\TestingController::class, 'index'])->name('testing.index');
 });
 

@@ -34,6 +34,7 @@ class Registration extends Model
         'price',
         'total',
         'counter',
+        'account_bank_name',
     ];
 
     protected $with = ['groupSeat', 'job', 'manufacture', 'services', 'seats'];
