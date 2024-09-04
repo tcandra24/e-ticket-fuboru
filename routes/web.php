@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth:participant']], function () {
     Route::post('/registrations', [\App\Http\Controllers\Participant\RegistrationController::class, 'store'])->name('store.registrations.participant');
 
     Route::post('/receipt/{event_id}/{no_registration}', [ \App\Http\Controllers\Participant\ReceiptController::class, 'store' ])->name('store.registrations.receipt');
+    Route::delete('/receipt/{id}/{event_id}/{no_registration}', [ \App\Http\Controllers\Participant\ReceiptController::class, 'destroy' ])->name('destroy.registrations.receipt');
 
     Route::get('/qr-code', [\App\Http\Controllers\Participant\QrCodeController::class, 'index'])->name('index.qr-code.participant');
     Route::get('/qr-code/show/{event_id}/{no_registration}', [\App\Http\Controllers\Participant\QrCodeController::class, 'show'])->name('show.qr-code.participant');

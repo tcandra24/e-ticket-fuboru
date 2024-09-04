@@ -136,14 +136,14 @@
 
                                         <div class="d-flex justify-content-between">
                                             <h6>Kode Bayar</h6>
-                                            <p>Rp.{{ number_format($counter, 0) }}</p>
+                                            <p>Rp.{{ number_format(1, 0) }}</p>
                                         </div>
 
                                         <hr>
 
                                         <div class="d-flex justify-content-between">
                                             <h6>Total</h6>
-                                            <p>Rp. {{ number_format($total + $counter) }}</p>
+                                            <p>Rp. {{ number_format($total + 1) }}</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -183,15 +183,34 @@
                             </div>
                         @endif
 
-                        <div class="row">
-                            @foreach ($receipts as $receipt)
-                                <div class="col-lg-4">
-                                    <a href="{{ $receipt->file }}" data-lightbox="{{ $no_registration }}">
-                                        <img class="card-img-bottom rounded object-fit-cover" src="{{ $receipt->file }}"
-                                            alt="{{ $no_registration }}">
-                                    </a>
+                        <div class="row mb-2">
+                            @if (count($receipts) > 0)
+                                @foreach ($receipts as $receipt)
+                                    <div class="col-lg-4">
+                                        <a href="{{ $receipt->file }}" data-lightbox="{{ $no_registration }}">
+                                            <img class="card-img-bottom rounded object-fit-cover"
+                                                src="{{ $receipt->file }}" alt="{{ $no_registration }}">
+                                        </a>
+                                        <button class="btn btn-danger btn-delete my-3"
+                                            data-id="{{ $receipt->id }}">Hapus</button>
+                                        <form id="form-delete-receipt-{{ $receipt->id }}" method="POST"
+                                            action="{{ route('destroy.registrations.receipt', ['id' => $receipt->id, 'event_id' => $event->id, 'no_registration' => $no_registration]) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="alert alert-info alert-dismissible fade show">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                        class="me-2">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                    </svg>
+                                    Bukti Pembayaran masih kosong
                                 </div>
-                            @endforeach
+                            @endif
                         </div>
 
                         <form method="POST"
@@ -206,7 +225,7 @@
                                         <label for="upload-data" class="form-label">Upload File</label>
                                         <input type="file" name="file" accept="image/png, image/jpeg, image/jpg"
                                             class="form-control" id="upload-data" aria-describedby="file"
-                                            placeholder="Masukan File">
+                                            placeholder="Masukan File" required>
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +235,6 @@
                             </span>
 
                             <button type="submit" class="btn btn-primary btn-submit">Submit</button>
-                            <button type="reset" class="btn btn-danger">Reset</button>
                         </form>
                     </div>
                 </div>
@@ -228,4 +246,24 @@
 
 @section('script')
     <script src="{{ asset('assets/libs/lightbox/js/lightbox.js') }}"></script>
+    <script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script>
+        $('.btn-delete').on('click', function() {
+            const id = $(this).attr('data-id')
+
+            Swal.fire({
+                title: "Yakin Hapus Gambar ?",
+                icon: "warning",
+                showCancelButton: !0,
+                confirmButtonColor: "#5d87ff",
+                confirmButtonText: "Yes",
+                closeOnConfirm: !1
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#form-delete-receipt-' + id).submit()
+                }
+            })
+
+        })
+    </script>
 @endsection

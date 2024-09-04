@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Participant;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 use App\Models\Receipt;
@@ -25,6 +26,23 @@ class ReceiptController extends Controller
 
             return redirect()->route('show.qr-code.participant', ['event_id' => $event_id, 'no_registration' => $no_registration])
                 ->with('success', 'Bukti Pembayaran Berhasil Disimpan');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function destroy($id, $event_id, $no_registration)
+    {
+        try {
+            $receipt = Receipt::findOrFail($id);
+            $receipt->delete();
+
+            if(Storage::disk('local')->exists('public/images/receipt/'. basename($receipt->file))){
+                Storage::disk('local')->delete('public/images/receipt/'. basename($receipt->file));
+            }
+
+            return redirect()->route('show.qr-code.participant', ['event_id' => $event_id, 'no_registration' => $no_registration])
+                ->with('success', 'Bukti Pembayaran Berhasil Dihapus');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
