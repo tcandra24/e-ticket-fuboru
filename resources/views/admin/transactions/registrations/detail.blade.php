@@ -639,19 +639,19 @@
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B1', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B1</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B2', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B2</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B3', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B3</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B4', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B4</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B5', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B5</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B6', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B6</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B7', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B7</button>
                                 </div>
 
@@ -1885,19 +1885,19 @@
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B19', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B19</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B20', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B20</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B21', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B21</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B22', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B22</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B23', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B23</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B24', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B24</button>
-                                    <button type="button" class="btn btn-padding btn-secondary btn-choose"
+                                    <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('B25', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>B25</button>
                                 </div>
 
