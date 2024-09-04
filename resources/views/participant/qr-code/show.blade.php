@@ -136,14 +136,14 @@
 
                                         <div class="d-flex justify-content-between">
                                             <h6>Kode Bayar</h6>
-                                            <p>Rp.{{ number_format(1, 0) }}</p>
+                                            <p>Rp.{{ number_format($counter, 0) }}</p>
                                         </div>
 
                                         <hr>
 
                                         <div class="d-flex justify-content-between">
                                             <h6>Total</h6>
-                                            <p>Rp. {{ number_format($total + 1) }}</p>
+                                            <p>Rp. {{ number_format($total + $counter) }}</p>
                                         </div>
                                     </div>
                                     <div class="row">

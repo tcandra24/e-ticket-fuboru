@@ -105,6 +105,7 @@ class QrCodeController extends Controller
             'price' =>$registration->price,
             'total' =>$registration->total,
             'qty' =>$registration->qty,
+            'counter' =>$registration->counter,
             'receiptIsExists' => $receipt->exists(),
             'receipts' => $receipt->get(),
         ]);

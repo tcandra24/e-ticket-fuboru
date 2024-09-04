@@ -78,10 +78,13 @@ class RegistrationController extends Controller
         $request->validate($rules, $ruleMessage);
 
         try {
-            $groupSeat = GroupSeat::select('name', 'quota', 'price')->withCount('registration')->where('id', $request->group_seat_id)->first();
+            $groupSeat = GroupSeat::select('name', 'quota', 'price')->withCount([
+                'registration as registration_count' => function ($query) {
+                    $query->where('is_valid', true);
+                },
+            ])->where('id', $request->group_seat_id)->first();
             $avaliableQuota = $groupSeat->quota - $groupSeat->registration_count;
             $qty = $request->qty;
-
 
             if($avaliableQuota === 0){
                 return redirect()
@@ -104,6 +107,7 @@ class RegistrationController extends Controller
 
             QrCode::size(200)->style('round')->eye('circle')->generate($token, Storage::path('public/qr-codes/') . 'qr-code-' . $token . '.svg');
             $registration_max = app($event->model_path)->withTrashed()->where('event_id', $event->id)->count() + 1;
+            $counter = app($event->model_path)->withTrashed()->count() + 1;
             $registration_number = 'EVENT-' . Str::upper($random) . '-'. str_pad($registration_max, 5, '0', STR_PAD_LEFT);
 
             $inputField['registration_number'] = $registration_number;
@@ -113,6 +117,7 @@ class RegistrationController extends Controller
             $inputField['total'] = $request->qty * $groupSeat->price;
             $inputField['token'] = $token;
             $inputField['is_valid'] = true;
+            $inputField['counter'] = $counter;
 
             $registration = app($event->model_path)->create($inputField);
 

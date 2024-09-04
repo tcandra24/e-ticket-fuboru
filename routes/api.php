@@ -17,10 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/scan-qr', [\App\Http\Controllers\Api\ScanController::class, 'scan']);
 Route::post('/manual-check-in', [\App\Http\Controllers\Api\ScanController::class, 'manualCheckIn']);
 
-Route::get('/export/registrations-data', [ \App\Http\Controllers\Api\RegistrationController::class, 'exportToFirebase' ]);
-
-Route::apiResource('/registrations-data', \App\Http\Controllers\Api\RegistrationController::class, [ 'only' => [ 'index', 'show' ] ]);
-
 Route::fallback(function() {
     abort(404, 'API Resource Not Found.');
 });

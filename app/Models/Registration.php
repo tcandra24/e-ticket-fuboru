@@ -33,6 +33,7 @@ class Registration extends Model
         'schedule_id',
         'price',
         'total',
+        'counter',
     ];
 
     protected $with = ['groupSeat', 'job', 'manufacture', 'services', 'seats'];

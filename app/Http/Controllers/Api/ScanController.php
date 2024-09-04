@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Events\UpdateRegisterData;
 
 use App\Models\Registration;
-use App\Models\RegistrationMechanic;
 use Carbon\Carbon;
 
 class ScanController extends Controller
@@ -16,20 +15,14 @@ class ScanController extends Controller
     {
         try {
             $token = $request->token;
-            // $event = $request->event;
 
-            // if($event === 'mechanic-gathering') {
-            //     $registration = RegistrationMechanic::where('token', $token);
-            // } else {
-            //     $registration = Registration::where('token', $token);
-            // }
-            $registration = RegistrationMechanic::where('token', $token);
+            $registration = Registration::where('token', $token);
 
             if (!$registration->exists()) {
                 throw new \Exception('Token tidak ditemukan');
             }
 
-            if ($registration->first()->is_scan) {
+            if ($registration->first()->is_scan === 'Sudah Scan') {
                 throw new \Exception('User Sudah Scan QrCode');
             }
 
@@ -37,8 +30,6 @@ class ScanController extends Controller
                 'is_scan' => true,
                 'scan_date' => Carbon::now()
             ]);
-
-            event(new UpdateRegisterData('scan-auto', $registration->first()));
 
             return response()->json([
                 'success' => true,

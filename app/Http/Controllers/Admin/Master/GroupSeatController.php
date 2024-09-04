@@ -13,7 +13,11 @@ class GroupSeatController extends Controller
 {
     public function index()
     {
-        $groupSeats = GroupSeat::with('event')->withCount('registration')->paginate(10);
+        $groupSeats = GroupSeat::with('event')->withCount([
+            'registration as registration_count' => function ($query) {
+                $query->where('is_valid', true);
+            },
+        ])->paginate(10);
         return view('admin.masters.group-seats.index', ['groupSeats' => $groupSeats]);
     }
 
