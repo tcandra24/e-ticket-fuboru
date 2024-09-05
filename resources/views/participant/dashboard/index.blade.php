@@ -44,12 +44,12 @@
                                             <div class="position-absolute w-100 h-100 "
                                                 style="background: #47474770;backdrop-filter: blur(3px);">
                                                 <p class="d-block text-center text-white fw-semibold display-6 mt-5">
-                                                    Anda Sudah Terdaftar di Event ini
+                                                    Anda Sudah Mendaftar di Event ini
                                                 </p>
 
                                                 <a href="{{ route('show.qr-code.participant', ['event_id' => $event->id, 'no_registration' => $event->registration_number]) }}"
                                                     class="text-center text-white text-decoration-underline d-block">
-                                                    Lihat Qr Code
+                                                    Lihat Detail
                                                 </a>
                                             </div>
                                         @endif
