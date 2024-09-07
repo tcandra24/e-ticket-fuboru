@@ -10,12 +10,10 @@ use App\Models\Event;
 use App\Models\FormField;
 use App\Models\Receipt;
 use Illuminate\Support\Facades\Storage;
-use Barryvdh\DomPDF\Facade\Pdf;
 
-use App\Models\Seat;
 use Carbon\Carbon;
 
-class QrCodeController extends Controller
+class TransactionController extends Controller
 {
     public function index()
     {
@@ -28,14 +26,14 @@ class QrCodeController extends Controller
             $dataRegistration = app($event->model_path)->select('event_id', 'registration_number', 'token')
             ->with('event')
             ->where('event_id', $event->id)
-            ->where('participant_id', $participant->id)->first();
+            ->where('participant_id', $participant->id)->get();
 
             if($dataRegistration){
-                $registrations->push($dataRegistration);
+                $registrations->push(...$dataRegistration);
             }
         }
 
-        return view('participant.qr-code.index', ['registrations' => $registrations]);
+        return view('participant.transactions.index', ['registrations' => $registrations]);
     }
 
     public function show($event_id, $no_registration)
@@ -96,19 +94,35 @@ class QrCodeController extends Controller
 
         $receipt = Receipt::where('registration_id', $registration->id);
 
-        return view('participant.qr-code.show', [
+        return view('participant.transactions.show', [
             'event' => $event,
             'fields' => $fields,
-            'token' => $registration->token,
-            'no_registration' => $registration->registration_number,
-            'is_valid' =>$registration->is_valid,
-            'price' =>$registration->price,
-            'total' =>$registration->total,
-            'qty' =>$registration->qty,
-            'counter' =>$registration->counter,
+            'registration' => $registration,
+            // 'token' => $registration->token,
+            // 'no_registration' => $registration->registration_number,
+            // 'is_valid' => $registration->is_valid,
+            // 'price' => $registration->price,
+            // 'total' => $registration->total,
+            // 'qty' => $registration->qty,
+            // 'counter' => $registration->counter,
             'receiptIsExists' => $receipt->exists(),
             'receipts' => $receipt->get(),
         ]);
+    }
+
+    public function destroy($event_id, $no_registration)
+    {
+        try {
+            $event = Event::where('id', $event_id)->first();
+
+            $registration = app($event->model_path)->where('event_id', $event_id)->where('registration_number', $no_registration);
+            $registration->delete();
+
+            return redirect()->route('index.transactions.participant')
+                ->with('success', 'Nomor Registrasi ' . $no_registration . ' Berhasil Dihapus');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     public function download($event_id, $no_registration)
@@ -169,5 +183,13 @@ class QrCodeController extends Controller
         $fileName = 'qr-code-' . $registration->token . '.svg';
 
         return response()->download(Storage::path('public/qr-codes/') . $fileName, $fileName);
+    }
+
+    public function finish($event_id, $no_registration)
+    {
+        $event = Event::where('id', $event_id)->first();
+
+        // $registration = app($event->model_path)->with('seats')->where('registration_number', $no_registration)->first();
+        return view('participant.transactions.finish', ['no_registration' => $no_registration, 'event' => $event]);
     }
 }

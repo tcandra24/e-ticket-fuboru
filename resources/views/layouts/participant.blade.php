@@ -17,7 +17,7 @@
     <div class="page-wrapper" id="main-wrapper">
         <nav class="navbar navbar-expand-lg px-2">
             <a class="navbar-brand text-nowrap logo-img" href="{{ route('participant.index') }}">
-                <img src="{{ asset('assets/images/logo.png') }}" width="120" alt="">
+                <img src="{{ asset('assets/images/logo.png') }}" width="100" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
                         <a class="nav-link" href="{{ route('participant.index') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('index.qr-code.participant') }}">Qr Code</a>
+                        <a class="nav-link" href="{{ route('index.transactions.participant') }}">Transaksi</a>
                     </li>
                 </ul>
             </div>

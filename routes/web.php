@@ -28,6 +28,8 @@ Route::group(['middleware' => ['guest:participant']], function () {
     Route::get('/register', [App\Http\Controllers\Participant\AuthController::class, 'register']);
     Route::post('/register', [App\Http\Controllers\Participant\AuthController::class, 'store'])->name('register.participant');
 
+    Route::get('/verify-email/{token}', App\Http\Controllers\Participant\VerifyEmailController::class)->name('participant.verify-email');
+
     Route::get('/provider/{provider}', [App\Http\Controllers\Participant\Vendor\AuthController::class, 'redirectToProvider'])->name('login.provider');
     Route::get('/provider/{provider}/callback', [App\Http\Controllers\Participant\Vendor\AuthController::class, 'handleProvideCallback']);
 });
@@ -41,9 +43,11 @@ Route::group(['middleware' => ['auth:participant']], function () {
     Route::post('/receipt/{event_id}/{no_registration}', [ \App\Http\Controllers\Participant\ReceiptController::class, 'store' ])->name('store.registrations.receipt');
     Route::delete('/receipt/{id}/{event_id}/{no_registration}', [ \App\Http\Controllers\Participant\ReceiptController::class, 'destroy' ])->name('destroy.registrations.receipt');
 
-    Route::get('/qr-code', [\App\Http\Controllers\Participant\QrCodeController::class, 'index'])->name('index.qr-code.participant');
-    Route::get('/qr-code/show/{event_id}/{no_registration}', [\App\Http\Controllers\Participant\QrCodeController::class, 'show'])->name('show.qr-code.participant');
-    Route::get('/qr-code/download/{event_id}/{no_registration}', [\App\Http\Controllers\Participant\QrCodeController::class, 'download'])->name('download.qr-code.participant');
+    Route::get('/transactions', [\App\Http\Controllers\Participant\TransactionController::class, 'index'])->name('index.transactions.participant');
+    Route::get('/transactions/show/{event_id}/{no_registration}', [\App\Http\Controllers\Participant\TransactionController::class, 'show'])->name('show.transactions.participant');
+    Route::get('/transactions/download/{event_id}/{no_registration}', [\App\Http\Controllers\Participant\TransactionController::class, 'download'])->name('download.transactions.participant');
+    Route::get('/transactions/finish/{event_id}/{no_registration}', [\App\Http\Controllers\Participant\TransactionController::class, 'finish'])->name('finish.transactions.participant');
+    Route::delete('/transactions/{event_id}/{no_registration}', [\App\Http\Controllers\Participant\TransactionController::class, 'destroy'])->name('destroy.transactions.participant');
 
     Route::get('/term-condition', [ \App\Http\Controllers\Participant\TermConditionController::class, 'index'])->name('term-condition');
 

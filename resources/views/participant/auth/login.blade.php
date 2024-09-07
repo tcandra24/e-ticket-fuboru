@@ -7,14 +7,14 @@
     <p class="text-center">Login E-Tiket</p>
     <form method="POST" action="{{ route('login.participant') }}">
         @csrf
-        @if (Session::has('login-error'))
+        @if (session()->has('login-error'))
             <div class="alert alert-danger" role="alert">
-                {{ Session::get('login-error') }}
+                {{ session()->get('login-error') }}
             </div>
         @endif
-        @if (Session::has('login-info'))
+        @if (session()->has('login-info'))
             <div class="alert alert-info" role="alert">
-                {{ Session::get('login-info') }}
+                {{ session()->get('login-info') }}
             </div>
         @endif
         <div class="mb-3">

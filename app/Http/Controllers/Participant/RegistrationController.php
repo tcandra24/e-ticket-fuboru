@@ -36,7 +36,15 @@ class RegistrationController extends Controller
             return $objectStd;
         });
 
-        return view('participant.registration.create', [ 'event' => $event, 'forms' => $forms ]);
+        $groupSeats = GroupSeat::whereHas('event', function($query) use ($event_id){
+            $query->where('id', $event_id);
+        })->withCount([
+            'registration as registration_count' => function ($query) {
+                // $query->where('is_valid', true);
+            },
+        ])->where('name', '<>', 'undangan')->get();
+
+        return view('participant.registration.create', [ 'event' => $event, 'forms' => $forms, 'groupSeats' => $groupSeats ]);
     }
 
     public function store(Request $request)
@@ -104,7 +112,7 @@ class RegistrationController extends Controller
 
             $registration = app($event->model_path)->create($inputField);
 
-            return redirect()->route('show.qr-code.participant', ['event_id' => $request->event_id, 'no_registration' => $registration->registration_number])->with('success', 'Registrasi Berhasil Disimpan');
+            return redirect()->route('show.transactions.participant', ['event_id' => $request->event_id, 'no_registration' => $registration->registration_number])->with('success', 'Registrasi Berhasil Disimpan');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

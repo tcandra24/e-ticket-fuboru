@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Participant;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 use App\Models\Participant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+
+use App\Mail\VerifyParticipantMail;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -27,9 +33,18 @@ class AuthController extends Controller
         ]);
 
         try {
+
             $credentials = $request->only('email', 'password');
             if (!Auth::guard('participant')->attempt($credentials, $request->remember)) {
                 throw new \Exception('Login Gagal, Username/Password salah');
+            }
+
+            $participant = Auth::guard('participant')->user();
+            if (!$participant->hasVerifiedEmail()) {
+                Auth::guard('participant')->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                throw new \Exception('Login Gagal, Email belum terverifikasi');
             }
 
             $request->session()->regenerate();
@@ -58,22 +73,18 @@ class AuthController extends Controller
         ]);
 
         try {
+            $token = hash_hmac('sha256', Crypt::encryptString(Str::uuid() . Carbon::now()->getTimestampMs() . $request->name), $request->email . $request->name);
+
             $user = Participant::create([
                 'name'      => $request->name,
                 'email'     => $request->email,
                 'no_hp'     => $request->no_hp,
                 'password'  => Hash::make($request->password),
+                'verify_email_token' => $token
             ]);
 
-            $credentials = [
-                'email' => $user->email,
-                'password' => $request->password,
-            ];
-
-            Auth::guard('participant')->attempt($credentials, true);
-
-            $request->session()->regenerate();
-            return redirect()->intended('/');
+            Mail::to($user->email)->send(new VerifyParticipantMail('Silahkan Verifikasi Email', $user->name, $token));
+            return redirect()->route('login.participant')->with('login-info', 'Silahkan verifikasi email anda');
         } catch (\Exception $e) {
             return back()->with('register-error', $e->getMessage());
         }

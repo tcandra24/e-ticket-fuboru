@@ -37,24 +37,10 @@
                 <div class="card-body">
                     <div class="row">
                         @foreach ($events as $event)
-                            <div class="col-sm-6 col-xl-4">
+                            <div class="col-sm-6 col-xl-3">
                                 <div class="card overflow-hidden rounded-2">
                                     <div class="position-relative">
-                                        @if ($event->is_registered)
-                                            <div class="position-absolute w-100 h-100 "
-                                                style="background: #47474770;backdrop-filter: blur(3px);">
-                                                <p class="d-block text-center text-white fw-semibold display-6 mt-5">
-                                                    Anda Sudah Mendaftar di Event ini
-                                                </p>
-
-                                                <a href="{{ route('show.qr-code.participant', ['event_id' => $event->id, 'no_registration' => $event->registration_number]) }}"
-                                                    class="text-center text-white text-decoration-underline d-block">
-                                                    Lihat Detail
-                                                </a>
-                                            </div>
-                                        @endif
-                                        <a
-                                            href=" {{ $event->is_registered ? 'javascript:void(0)' : route('create.registrations.participant', $event->id) }}">
+                                        <a href=" {{ route('create.registrations.participant', $event->id) }}">
                                             <img data-src="{{ $event->image }}" class="card-img-top rounded-0 lazy"
                                                 alt="{{ $event->slug }}">
                                         </a>

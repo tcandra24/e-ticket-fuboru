@@ -45,6 +45,8 @@ class AuthController extends Controller
                     'email' => $socialUser->getEmail(),
                     'password' => '-'
                 ]);
+
+                $participant->markEmailAsVerified();
             }
 
             $participant->socialAccounts()->create([

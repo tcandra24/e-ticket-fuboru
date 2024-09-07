@@ -7,7 +7,7 @@
 @section('content')
     <div class="row justify-content-center w-100">
         <div class="col-10">
-            @if ($is_valid === 'Terverifikasi')
+            @if ($registration->is_valid === 'Terverifikasi')
                 <div class="alert alert-success alert-dismissible fade show">
                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
                         stroke-linecap="round" stroke-linejoin="round" class="me-2">
@@ -25,9 +25,9 @@
                                 <div class="d-block w-100 my-2">
                                     <div class="d-flex justify-content-center">
                                         <div class="d-flex flex-column">
-                                            <img src="{{ asset('/storage/qr-codes/qr-code-' . $token . '.svg') }}"
+                                            <img src="{{ asset('/storage/qr-codes/qr-code-' . $registration->token . '.svg') }}"
                                                 width="250" height="250" alt="">
-                                            <a href="{{ route('download.qr-code.participant', ['event_id' => $event->id, 'no_registration' => $no_registration]) }}"
+                                            <a href="{{ route('download.transactions.participant', ['event_id' => $event->id, 'no_registration' => $registration->registration_number]) }}"
                                                 target="_blank" rel=”nofollow” class="btn btn-primary mt-3">
                                                 Download
                                             </a>
@@ -84,6 +84,11 @@
                     <div class="row">
                         <div class="col-lg-8 col-sm-12">
                             <div class="card">
+                                <div class="card-header">
+                                    <h2 class="fw-bold">
+                                        {{ $event->name }}
+                                    </h2>
+                                </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-4">
@@ -123,15 +128,21 @@
                         </div>
                         <div class="col-lg-4 col-sm-12">
                             <div class="card">
+                                <div class="card-header">
+                                    <h2 class="fw-bold">
+                                        Tagihan
+                                    </h2>
+                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title mb-4">
-                                        Total Tagihan
+                                        Rincian Tagihan
                                     </h5>
 
                                     <div class="row">
                                         <div class="d-flex justify-content-between">
                                             <h6>Harga</h6>
-                                            <p>{{ $qty }} x Rp. {{ number_format($price, 0) }}</p>
+                                            <p>{{ $registration->qty }} x Rp. {{ number_format($registration->price, 0) }}
+                                            </p>
                                         </div>
 
                                         <div class="d-flex justify-content-between">
@@ -143,16 +154,26 @@
 
                                         <div class="d-flex justify-content-between">
                                             <h6>Total</h6>
-                                            <p>Rp. {{ number_format($total + 1) }}</p>
+                                            <p>Rp. {{ number_format($registration->total + 1) }}</p>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row my-2">
                                         <span>
                                             <i> Silahkan Transfer Tagihan Ke Rek Ini BCA <strong>8620726002</strong> Atas
                                                 Nama
                                                 <strong>BGKP Santo Yakobus</strong>
                                             </i>
                                         </span>
+                                    </div>
+                                    <div class="row">
+                                        <button class="btn btn-danger btn-cancel"
+                                            data-no-registration="{{ $registration->registration_number }}">Batalkan
+                                            Pesanan</button>
+                                        <form id="form-cancel-registration" method="POST"
+                                            action="{{ route('destroy.transactions.participant', ['event_id' => $event->id, 'no_registration' => $registration->registration_number]) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -187,14 +208,16 @@
                             @if (count($receipts) > 0)
                                 @foreach ($receipts as $receipt)
                                     <div class="col-lg-4">
-                                        <a href="{{ $receipt->file }}" data-lightbox="{{ $no_registration }}">
+                                        <a href="{{ $receipt->file }}"
+                                            data-lightbox="{{ $registration->registration_number }}">
                                             <img class="card-img-bottom rounded object-fit-cover"
-                                                src="{{ $receipt->file }}" alt="{{ $no_registration }}">
+                                                src="{{ $receipt->file }}"
+                                                alt="{{ $registration->registration_number }}">
                                         </a>
                                         <button class="btn btn-danger btn-delete my-3"
                                             data-id="{{ $receipt->id }}">Hapus</button>
                                         <form id="form-delete-receipt-{{ $receipt->id }}" method="POST"
-                                            action="{{ route('destroy.registrations.receipt', ['id' => $receipt->id, 'event_id' => $event->id, 'no_registration' => $no_registration]) }}">
+                                            action="{{ route('destroy.registrations.receipt', ['id' => $receipt->id, 'event_id' => $event->id, 'no_registration' => $registration->registration_number]) }}">
                                             @csrf
                                             @method('DELETE')
                                         </form>
@@ -214,7 +237,7 @@
                         </div>
 
                         <form method="POST"
-                            action="{{ route('store.registrations.receipt', ['event_id' => $event->id, 'no_registration' => $no_registration]) }}"
+                            action="{{ route('store.registrations.receipt', ['event_id' => $event->id, 'no_registration' => $registration->registration_number]) }}"
                             enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="event_id" value="{{ $event->id }}">
@@ -261,6 +284,25 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $('#form-delete-receipt-' + id).submit()
+                }
+            })
+
+        })
+
+        $('.btn-cancel').on('click', function() {
+            const content = $(this).attr('data-no-registration')
+
+            Swal.fire({
+                title: "Yakin Batalkan Pesanan ?",
+                text: content,
+                icon: "warning",
+                showCancelButton: !0,
+                confirmButtonColor: "#5d87ff",
+                confirmButtonText: "Yes",
+                closeOnConfirm: !1
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#form-cancel-registration').submit()
                 }
             })
 

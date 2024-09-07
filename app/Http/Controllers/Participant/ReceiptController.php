@@ -24,8 +24,7 @@ class ReceiptController extends Controller
                 'registration_id' => $registrations->id
             ]);
 
-            return redirect()->route('show.qr-code.participant', ['event_id' => $event_id, 'no_registration' => $no_registration])
-                ->with('success', 'Bukti Pembayaran Berhasil Disimpan');
+            return redirect()->route('finish.transactions.participant', ['event_id' => $event_id, 'no_registration' => $no_registration]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -41,7 +40,7 @@ class ReceiptController extends Controller
                 Storage::disk('local')->delete('public/images/receipt/'. basename($receipt->file));
             }
 
-            return redirect()->route('show.qr-code.participant', ['event_id' => $event_id, 'no_registration' => $no_registration])
+            return redirect()->route('show.transactions.participant', ['event_id' => $event_id, 'no_registration' => $no_registration])
                 ->with('success', 'Bukti Pembayaran Berhasil Dihapus');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
