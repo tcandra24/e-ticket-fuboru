@@ -66,7 +66,7 @@
                                 <option value="">Pilih Event</option>
                                 @foreach ($events as $event)
                                     <option value="{{ $event->id }}"
-                                        {{ $groupSeat->event_id === $event->id ? 'selected' : '' }}>
+                                        {{ $groupSeat->event->id === $event->id ? 'selected' : '' }}>
                                         {{ $event->name }}
                                     </option>
                                 @endforeach
@@ -86,7 +86,7 @@
                                 <option value="">Pilih Jadwal</option>
                                 @foreach ($schedules as $schedule)
                                     <option value="{{ $schedule->id }}"
-                                        {{ $groupSeat->schedule_id === $schedule->id ? 'selected' : '' }}>
+                                        {{ $groupSeat->schedule->id === $schedule->id ? 'selected' : '' }}>
                                         {{ $schedule->name }}
                                     </option>
                                 @endforeach
