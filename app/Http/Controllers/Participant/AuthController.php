@@ -75,6 +75,11 @@ class AuthController extends Controller
         ]);
 
         try {
+            $participant = Participant::where('email', $request->email)->first();
+            if($participant){
+                throw new \Exception('Email ' . $request->email . ' sudah ada');
+            }
+
             $token = hash_hmac('sha256', Crypt::encryptString(Str::uuid() . Carbon::now()->getTimestampMs() . $request->name), $request->email . $request->name);
 
             $user = Participant::create([
@@ -91,7 +96,7 @@ class AuthController extends Controller
                 'template' => (new VerifyParticipantMail('Silahkan Verifikasi Email', $user->name, $token))
             ];
             dispatch(new SendMailJob($data));
-            return redirect()->route('login.participant')->with('login-info', 'Silahkan verifikasi email anda');
+            return redirect()->route('login.participant')->with('login-info', 'Silahkan cek Email untuk verifikasi Email anda');
         } catch (\Exception $e) {
             return back()->with('register-error', $e->getMessage());
         }

@@ -47,12 +47,12 @@ class AuthController extends Controller
                 ]);
 
                 $participant->markEmailAsVerified();
-            }
 
-            $participant->socialAccounts()->create([
-                'provider_id'   => $socialUser->getId(),
-                'provider_name' => $provider
-            ]);
+                $participant->socialAccounts()->create([
+                    'provider_id'   => $socialUser->getId(),
+                    'provider_name' => $provider
+                ]);
+            }
 
             return $participant;
         }
