@@ -71,7 +71,7 @@
                                         <div class="col-12">
                                             <h5 class="card-title mb-9 fw-semibold"> {{ $groupSeat->name }} </h5>
                                             <h4 class="fw-semibold mb-3">
-                                                {{ $groupSeat->quota - $groupSeat->registration_sum_qty }}
+                                                {{ $groupSeat->quota - $groupSeat->registration_sum_qty }} Kursi
                                             </h4>
                                         </div>
                                     </div>
