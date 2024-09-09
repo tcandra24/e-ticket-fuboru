@@ -7,18 +7,24 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendEmailFromRegistration extends Mailable
+class ForgetPasswordParticipantMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
+
+    public $title;
+    public $name;
+    public $token;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($title, $name, $token)
     {
-        $this->data = $data;
+        $this->title = $title;
+        $this->name = $name;
+        $this->token = $token;
     }
 
     /**
@@ -28,7 +34,6 @@ class SendEmailFromRegistration extends Mailable
      */
     public function build()
     {
-        return $this->subject('Testing Kirim Email')
-                ->view('emails.sendemail');
+        return $this->subject($this->title)->view('participant.email.forget-password', [ 'name' => $this->name, 'token' => $this->token ]);
     }
 }

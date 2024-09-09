@@ -34,6 +34,6 @@ class VerifyParticipantMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Tes ' . $this->title)->view('participant.email.verify-email', [ 'name' => $this->name, 'token' => $this->token ]);
+        return $this->subject($this->title)->view('participant.email.verify-email', [ 'name' => $this->name, 'token' => $this->token ]);
     }
 }

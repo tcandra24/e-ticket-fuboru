@@ -1,0 +1,8 @@
+Ganti
+QUEUE_CONNECTION=database
+
+hapus Jobs, Manufactures, Services beserta relasi-relasinya
+jalankan perintah php artisan queue:table
+php artisan migrate
+
+perlu tambah cronjobdi sharehosting

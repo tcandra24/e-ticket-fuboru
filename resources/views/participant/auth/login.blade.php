@@ -48,9 +48,13 @@
         <a href="{{ route('login.provider', 'google') }}" class="btn btn-secondary w-100 py-8 fs-4 mb-2 rounded-2">
             Google
         </a>
-        <div class="d-flex align-items-center justify-content-center">
+        <div class="d-flex align-items-center justify-content-center my-2">
             <p class="fs-4 mb-0 fw-bold">Belum punya akun?</p>
             <a class="text-primary fw-bold ms-2" href="{{ route('register.participant') }}">Buat akun</a>
+        </div>
+        <div class="d-flex align-items-center justify-content-center">
+            <p class="fs-4 mb-0 fw-bold">Lupa Password?</p>
+            <a class="text-primary fw-bold ms-2" href="{{ route('index.forget-password.participant') }}">Ganti Password</a>
         </div>
     </form>
 @endsection

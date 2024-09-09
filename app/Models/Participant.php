@@ -14,7 +14,7 @@ class Participant extends Authenticatable implements MustVerifyEmail
         'email',
         'no_hp',
         'password',
-        'verify_email_token',
+        'token',
     ];
 
     protected $hidden = [

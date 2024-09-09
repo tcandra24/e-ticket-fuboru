@@ -18,12 +18,15 @@ class VerifyEmailController extends Controller
     public function __invoke(Request $request)
     {
         $token = $request->token;
-        $participant = Participant::where('verify_email_token', $token);
-        if(!$participant->exists()){
+        $participant = Participant::where('token', $token)->first();
+        if(!$participant){
             abort(404);
         }
 
-        $participant = $participant->first();
+        if($participant->hasVerifiedEmail()){
+            abort(404);
+        }
+
         $participant->markEmailAsVerified();
 
         return redirect()->route('login.participant')->with('login-info', 'Email Berhasil diverifikasi, silahkan login');

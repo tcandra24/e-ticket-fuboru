@@ -14,7 +14,7 @@ class AddVerifyEmailToken extends Migration
     public function up()
     {
         Schema::table('participants', function (Blueprint $table) {
-            $table->string('verify_email_token');
+            $table->string('token');
         });
     }
 
@@ -26,7 +26,7 @@ class AddVerifyEmailToken extends Migration
     public function down()
     {
         Schema::table('participants', function (Blueprint $table) {
-            $table->dropColumn('verify_email_token');
+            $table->dropColumn('token');
         });
     }
 }

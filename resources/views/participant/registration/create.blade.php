@@ -71,7 +71,7 @@
                                         <div class="col-12">
                                             <h5 class="card-title mb-9 fw-semibold"> {{ $groupSeat->name }} </h5>
                                             <h4 class="fw-semibold mb-3">
-                                                {{ $groupSeat->quota - $groupSeat->registration_count }}
+                                                {{ $groupSeat->quota - $groupSeat->registration_sum_qty }}
                                             </h4>
                                         </div>
                                     </div>
@@ -125,7 +125,7 @@
                             </div>
                         </div>
 
-                        <form method="POST" action="{{ route('store.registrations.participant') }}">
+                        <form id="form-registration" method="POST" action="{{ route('store.registrations.participant') }}">
                             @csrf
                             <input type="hidden" name="event_id" value="{{ $event->id }}">
 
@@ -185,6 +185,10 @@
         <script>
             $('.select2-elements').select2({
                 theme: 'bootstrap-5'
+            })
+
+            $('#form-registration').on('reset', function() {
+                $('.select2-elements').val('').trigger('change')
             })
         </script>
     @endsection

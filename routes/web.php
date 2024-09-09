@@ -29,6 +29,13 @@ Route::group(['middleware' => ['guest:participant']], function () {
     Route::post('/register', [App\Http\Controllers\Participant\AuthController::class, 'store'])->name('register.participant');
 
     Route::get('/verify-email/{token}', App\Http\Controllers\Participant\VerifyEmailController::class)->name('participant.verify-email');
+    // Route::get('/resend-email/{token}', App\Http\Controllers\Participant\ResendEmailController::class)->name('participant.resend-email');
+
+    Route::get('/forget-password', [App\Http\Controllers\Participant\ForgetPasswordController::class, 'index'])->name('index.forget-password.participant');
+    Route::post('/forget-password', [App\Http\Controllers\Participant\ForgetPasswordController::class, 'sendEmail'])->name('store.forget-password.participant');
+
+    Route::get('/change-password/{token}', [App\Http\Controllers\Participant\ChangePasswordController::class, 'index'])->name('index.change-password.participant');
+    Route::post('/change-password/{token}', [App\Http\Controllers\Participant\ChangePasswordController::class, 'store'])->name('store.change-password.participant');
 
     Route::get('/provider/{provider}', [App\Http\Controllers\Participant\Vendor\AuthController::class, 'redirectToProvider'])->name('login.provider');
     Route::get('/provider/{provider}/callback', [App\Http\Controllers\Participant\Vendor\AuthController::class, 'handleProvideCallback']);
@@ -70,9 +77,6 @@ Route::prefix('admin')->group(function() {
             ->middleware('permission:dashboard.index')->name('dashboard.index');
 
         Route::prefix('master')->group(function() {
-            // Route::resource('/jobs', \App\Http\Controllers\Admin\Master\JobController::class, [ 'except' => ['show'] ])
-            // ->middleware('permission:master.jobs.index|master.jobs.create|master.jobs.edit|master.jobs.delete');
-
             Route::resource('/group-seats', \App\Http\Controllers\Admin\Master\GroupSeatController::class, [ 'except' => ['show'] ])
             ->middleware('permission:master.group-seats.index|master.group-seats.create|master.group-seats.edit|master.group-seats.delete');
 
@@ -82,14 +86,8 @@ Route::prefix('admin')->group(function() {
             Route::resource('/schedules', \App\Http\Controllers\Admin\Master\ScheduleController::class, [ 'except' => ['show'] ])
             ->middleware('permission:master.schedules.index|master.schedules.create|master.schedules.edit|master.schedules.delete');
 
-            // Route::resource('/manufactures', \App\Http\Controllers\Admin\Master\ManufactureController::class, [ 'except' => ['show'] ])
-            // ->middleware('permission:master.manufactures.index|master.manufactures.create|master.manufactures.edit|master.manufactures.delete');
-
             Route::resource('/events', \App\Http\Controllers\Admin\Master\EventController::class, [ 'except' => ['show'] ])
             ->middleware('permission:master.events.index|master.events.create|master.events.edit|master.events.delete');
-
-            // Route::resource('/services', \App\Http\Controllers\Admin\Master\ServiceController::class, [ 'except' => ['show'] ])
-            // ->middleware('permission:master.services.index|master.services.create|master.services.edit|master.services.delete');
         });
 
         Route::prefix('transaction')->group(function() {

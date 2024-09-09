@@ -19,27 +19,30 @@
             <a class="navbar-brand text-nowrap logo-img" href="{{ route('participant.index') }}">
                 <img src="{{ asset('assets/images/logo.png') }}" width="100" alt="">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse my-2" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('participant.index') }}">Dashboard</a>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link fw-semibold" href="{{ route('participant.index') }}">Dashboard</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('index.transactions.participant') }}">Transaksi</a>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link fw-semibold"
+                            href="{{ route('index.transactions.participant') }}">Transaksi</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <button class="btn btn-danger" type="button" id="btn-participant-logout">Logout</button>
+                        <form method="POST" id="form-participant-logout" action="{{ route('logout.participant') }}">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             </div>
             <div class="mx-2">
                 <h4>{{ ucwords(strtolower(auth()->guard('participant')->user()->name)) }}</h4>
             </div>
-            <button class="btn btn-danger mx-3" type="button" id="btn-participant-logout">Logout</button>
-            <form method="POST" id="form-participant-logout" action="{{ route('logout.participant') }}">
-                @csrf
-            </form>
         </nav>
         <div class="position-relative overflow-hidden radial-gradient min-vh-100">
             <div class="d-flex justify-content-center w-100 my-3">

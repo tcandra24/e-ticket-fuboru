@@ -9,6 +9,8 @@ use App\Models\Participant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use App\Jobs\SendMailJob;
+
 use App\Mail\VerifyParticipantMail;
 
 use Illuminate\Support\Facades\Auth;
@@ -80,10 +82,15 @@ class AuthController extends Controller
                 'email'     => $request->email,
                 'no_hp'     => $request->no_hp,
                 'password'  => Hash::make($request->password),
-                'verify_email_token' => $token
+                'token' => $token
             ]);
 
-            Mail::to($user->email)->send(new VerifyParticipantMail('Silahkan Verifikasi Email', $user->name, $token));
+            // Mail::to($user->email)->send(new VerifyParticipantMail('Silahkan Verifikasi Email', $user->name, $token));
+            $data = [
+                'email' => $user->email,
+                'template' => (new VerifyParticipantMail('Silahkan Verifikasi Email', $user->name, $token))
+            ];
+            dispatch(new SendMailJob($data));
             return redirect()->route('login.participant')->with('login-info', 'Silahkan verifikasi email anda');
         } catch (\Exception $e) {
             return back()->with('register-error', $e->getMessage());

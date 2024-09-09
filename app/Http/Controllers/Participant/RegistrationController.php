@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+use App\Jobs\DeleteUnvalidateRegistrationJob;
+
 use App\Models\Event;
 use App\Models\FormField;
 use App\Models\GroupSeat;
@@ -38,11 +40,14 @@ class RegistrationController extends Controller
 
         $groupSeats = GroupSeat::whereHas('event', function($query) use ($event_id){
             $query->where('id', $event_id);
-        })->withCount([
-            'registration as registration_count' => function ($query) {
-                // $query->where('is_valid', true);
-            },
-        ])->where('name', '<>', 'undangan')->get();
+        })
+        // ->withCount([
+        //     'registration as registration_count' => function ($query) {
+        //         // $query->where('is_valid', true);
+        //     },
+        // ])
+        ->withSum('registration', 'qty')
+        ->where('name', '<>', 'undangan')->get();
 
         return view('participant.registration.create', [ 'event' => $event, 'forms' => $forms, 'groupSeats' => $groupSeats ]);
     }
@@ -73,10 +78,9 @@ class RegistrationController extends Controller
         $request->validate($rules, $ruleMessage);
 
         try {
-            $groupSeat = GroupSeat::select('name', 'quota', 'price')->withCount('registration')->where('id', $request->group_seat_id)->first();
-            $avaliableQuota = $groupSeat->quota - $groupSeat->registration_count;
+            $groupSeat = GroupSeat::select('name', 'quota', 'price')->withSum('registration', 'qty')->where('id', $request->group_seat_id)->first();
+            $avaliableQuota = $groupSeat->quota - $groupSeat->registration_sum_qty;
             $qty = $request->qty;
-
 
             if($avaliableQuota === 0){
                 return redirect()
@@ -111,6 +115,8 @@ class RegistrationController extends Controller
             $inputField['counter'] = $counter;
 
             $registration = app($event->model_path)->create($inputField);
+
+            DeleteUnvalidateRegistrationJob::dispatch($registration)->delay(now()->addMinutes(30));
 
             return redirect()->route('show.transactions.participant', ['event_id' => $request->event_id, 'no_registration' => $registration->registration_number])->with('success', 'Registrasi Berhasil Disimpan');
         } catch (\Exception $e) {

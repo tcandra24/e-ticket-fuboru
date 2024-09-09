@@ -14,14 +14,14 @@ class Kernel extends ConsoleKernel
      * @return void
      */
 
-    protected $commands = [
-        Commands\DeleteNotPayCron::class,
-    ];
+    // protected $commands = [
+    //     Commands\DeleteNotPayCron::class,
+    // ];
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('deleteNotPay:cron')
-            ->everyMinute();
+        // $schedule->command('deleteNotPay:cron')
+        //     ->everyMinute();
     }
 
     /**

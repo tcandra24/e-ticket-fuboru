@@ -37,31 +37,16 @@ class Registration extends Model
         'account_bank_name',
     ];
 
-    protected $with = ['groupSeat', 'job', 'manufacture', 'services', 'seats'];
+    protected $with = ['groupSeat', 'seats', 'receipts'];
 
     public function groupSeat()
     {
         return $this->belongsTo(GroupSeat::class);
     }
 
-    public function job()
-    {
-        return $this->belongsTo(Job::class);
-    }
-
-    public function manufacture()
-    {
-        return $this->belongsTo(Manufacture::class);
-    }
-
     public function participant()
     {
         return $this->belongsTo(Participant::class);
-    }
-
-    public function services()
-    {
-        return $this->belongsToMany(Service::class, 'registration_service');
     }
 
     public function seats()
@@ -87,6 +72,11 @@ class Registration extends Model
     public function getFullnameAttribute($value)
     {
         return ucwords($value);
+    }
+
+    public function getExpiredDatetime()
+    {
+        return $this->created_at->addMinutes(30);
     }
 
     public function getIsScanAttribute($value)

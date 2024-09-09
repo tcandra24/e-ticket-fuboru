@@ -77,7 +77,7 @@
                             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                         </svg>
                         <strong>Mohon Tuggu!</strong> Pendaftaran <strong>{{ $event->name }}</strong> anda diproses.
-                        Silahkan Melakukan Pembayaran
+                        Silahkan Melakukan Pembayaran dan Kirim Bukti Transfernya disini
                     </div>
                 @endif
                 <div class="col-lg-12">
@@ -176,6 +176,15 @@
                                         </form>
                                     </div>
                                 </div>
+                                @if (!$receiptIsExists)
+                                    <div class="card-footer">
+                                        <h5 class="text-danger">
+                                            Segera kirim bukti transfer sebelum
+                                            <br>
+                                            <b>{{ $registration->getExpiredDatetime() }}</b>
+                                        </h5>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -214,13 +223,15 @@
                                                 src="{{ $receipt->file }}"
                                                 alt="{{ $registration->registration_number }}">
                                         </a>
-                                        <button class="btn btn-danger btn-delete my-3"
-                                            data-id="{{ $receipt->id }}">Hapus</button>
-                                        <form id="form-delete-receipt-{{ $receipt->id }}" method="POST"
-                                            action="{{ route('destroy.registrations.receipt', ['id' => $receipt->id, 'event_id' => $event->id, 'no_registration' => $registration->registration_number]) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
+                                        @if (count($receipts) > 1)
+                                            <button class="btn btn-danger btn-delete my-3"
+                                                data-id="{{ $receipt->id }}">Hapus</button>
+                                            <form id="form-delete-receipt-{{ $receipt->id }}" method="POST"
+                                                action="{{ route('destroy.registrations.receipt', ['id' => $receipt->id, 'event_id' => $event->id, 'no_registration' => $registration->registration_number]) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        @endif
                                     </div>
                                 @endforeach
                             @else

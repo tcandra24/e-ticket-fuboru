@@ -135,7 +135,7 @@
                                             <div class="card-body">
                                                 <div class="row align-items-start">
                                                     <div class="col-8">
-                                                        <h5 class="card-title mb-9 fw-semibold"> Pendaftar Tidak Hadir </h5>
+                                                        <h5 class="card-title mb-9 fw-semibold"> Pendaftar Belum Hadir </h5>
                                                         <h4 class="fw-semibold mb-3">
                                                             {{ $event->count_participant_register - $event->count_participant_scan }}
                                                         </h4>
