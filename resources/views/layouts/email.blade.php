@@ -33,9 +33,15 @@
 
         .btn-action {
             padding: 10px;
-            color: white;
+            color: white !important;
+            font-weight: bold !important;
             text-decoration: none;
             border-radius: 5px;
+        }
+
+        .container-btn {
+            display: flex !important;
+            justify-content: center !important;
         }
     </style>
 </head>

@@ -4,7 +4,7 @@
     <h2 class="text-center">Lupa Password</h2>
     <p>Peserta {{ $name }},</p>
     <p>Silahkan reset password email Anda dengan mengklik tombol di bawah ini:</p>
-    <div class="text-center">
+    <div class="container-btn">
         <a href="{{ route('index.change-password.participant', $token) }}" target="_blank"
             class="btn btn-primary btn-action">Ganti
             Password</a>
