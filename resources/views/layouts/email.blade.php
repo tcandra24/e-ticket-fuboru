@@ -30,6 +30,13 @@
             background-color: #007bff;
             border-color: #007bff;
         }
+
+        .btn-action {
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
