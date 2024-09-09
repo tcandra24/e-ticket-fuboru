@@ -66,7 +66,7 @@
                                 <option value="">Pilih Event</option>
                                 @foreach ($events as $event)
                                     <option value="{{ $event->id }}"
-                                        {{ $schedule->event_id === $event->id ? 'selected' : '' }}>
+                                        {{ $schedule->event->id === $event->id ? 'selected' : '' }}>
                                         {{ $event->name }}
                                     </option>
                                 @endforeach
