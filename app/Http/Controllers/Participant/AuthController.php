@@ -64,7 +64,7 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'required|unique:users,email',
+            'email' => 'required|unique:participants',
             'name' => 'required',
             'password' => 'required',
         ], [
@@ -77,7 +77,7 @@ class AuthController extends Controller
         try {
             $participant = Participant::where('email', $request->email)->first();
             if($participant){
-                throw new \Exception('Email ' . $request->email . ' sudah ada');
+                throw new \Exception('Email ' . $request->email . ' sudah digunakan');
             }
 
             $token = hash_hmac('sha256', Crypt::encryptString(Str::uuid() . Carbon::now()->getTimestampMs() . $request->name), $request->email . $request->name);
