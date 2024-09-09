@@ -23,5 +23,8 @@
         </div>
 
         <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Kirim Email</button>
+        <div class="d-flex align-items-center justify-content-center">
+            <a class="text-primary fw-bold ms-2" href="{{ route('login.participant') }}">Login</a>
+        </div>
     </form>
 @endsection

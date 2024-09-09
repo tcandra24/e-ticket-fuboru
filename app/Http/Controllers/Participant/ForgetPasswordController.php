@@ -31,7 +31,11 @@ class ForgetPasswordController extends Controller
 
         try {
             $email = $request->email;
-            $participant = Participant::where('email', $email)->first();
+            $participant = Participant::with('socialAccounts')->where('email', $email)->first();
+
+            if($participant->socialAccounts()->count() > 0){
+                throw new \Exception('Email Sudah Terdaftar Dengan Login Google');
+            }
 
             if(!$participant){
                 throw new \Exception('Email Belum Terdaftar');
