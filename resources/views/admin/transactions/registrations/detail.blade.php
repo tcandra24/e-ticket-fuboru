@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="d-block w-100">
-                        <div class="d-flex flex-row justify-content-center">
+                        <div class="d-flex flex-wrap flex-row justify-content-start">
                             <div class="d-flex flex-column">
                                 <div class="p-2">
                                     <h4>Nama Lengkap: </h4>
@@ -159,7 +159,7 @@
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                         <div class="justify-content-between mt-3">
-                            <div class="d-flex" style="gap: 5px;">
+                            <div class="d-flex flex-wrap" style="gap: 5px;">
                                 <button type="button" class="btn btn-reguler">Reguler</button>
                                 <button type="button" class="btn btn-vip">VIP</button>
                                 <button type="button" class="btn btn-vvip">VVIP</button>
