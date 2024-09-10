@@ -193,26 +193,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title mb-4">
-                            Upload Bukti Transfer <span class="fw-semibold">{{ $event->name }}</span>
+                            Foto yang Tersimpan
                         </h5>
-                        @if (Session::has('error'))
-                            <div class="alert alert-danger alert-dismissible fade show">
-                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                    class="me-2">
-                                    <polygon
-                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
-                                    </polygon>
-                                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                                    <line x1="9" y1="9" x2="15" y2="15"></line>
-                                </svg>
-                                <strong>Error!</strong> {{ Session::get('error') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-                                    <span><i class="fa-solid fa-xmark"></i></span>
-                                </button>
-                            </div>
-                        @endif
-
                         <div class="row mb-2">
                             @if (count($receipts) > 0)
                                 @foreach ($receipts as $receipt)
@@ -246,6 +228,41 @@
                                 </div>
                             @endif
                         </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">
+                            Upload Bukti Transfer <span class="fw-semibold">{{ $event->name }}</span>
+                        </h5>
+
+                        @if (Session::has('error'))
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="me-2">
+                                    <polygon
+                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                    </polygon>
+                                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                                </svg>
+                                <strong>Error!</strong> {{ Session::get('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                    <span><i class="fa-solid fa-xmark"></i></span>
+                                </button>
+                            </div>
+                        @endif
+
+                        <div class="row mb-2">
+                            <div class="col-lg-4">
+                                <img id="previewReceipt" class="card-img-bottom rounded object-fit-cover">
+
+                                <button class="btn btn-danger my-3" id="removeImage"
+                                    style="display: none;">Hapus</button>
+                            </div>
+                        </div>
 
                         <form method="POST"
                             action="{{ route('store.registrations.receipt', ['event_id' => $event->id, 'no_registration' => $registration->registration_number]) }}"
@@ -257,9 +274,9 @@
                                 <div class="col-lg-4 d-flex align-items-stretch">
                                     <div class="mb-3 w-100">
                                         <label for="upload-data" class="form-label">Upload File</label>
-                                        <input type="file" name="file" accept="image/png, image/jpeg, image/jpg"
-                                            class="form-control" id="upload-data" aria-describedby="file"
-                                            placeholder="Masukan File" required>
+                                        <input type="file" name="file" id="fileInput"
+                                            accept="image/png, image/jpeg, image/jpg" class="form-control"
+                                            id="upload-data" aria-describedby="file" placeholder="Masukan File" required>
                                     </div>
                                 </div>
                             </div>
@@ -316,7 +333,43 @@
                     $('#form-cancel-registration').submit()
                 }
             })
+        })
 
+        $(document).ready(function() {
+            // const fileInput = document.getElementById('fileInput');
+            // const preview = document.getElementById('previewReceipt');
+            // const removeImage = document.getElementById('removeImage');
+
+            const fileInput = $('#fileInput')
+            const preview = $('#previewReceipt')
+            const removeImage = $('#removeImage')
+
+            $(fileInput).on('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $(preview).attr('src', e.target.result)
+                        $(preview).css('display', 'block')
+                        $(removeImage).css('display', 'inline')
+                        // preview.src = e.target.result;
+                        // preview.style.display = 'block'
+                        // removeImage.style.display = 'inline'
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $(removeImage).on('click', function() {
+                // preview.src = ''
+                // preview.style.display = 'none'
+                // removeImage.style.display = 'none'
+                // fileInput.value = ''
+                $(preview).attr('src', '')
+                $(preview).css('display', 'none')
+                $(removeImage).css('display', 'none')
+                $(fileInput).val('')
+            })
         })
     </script>
 @endsection
