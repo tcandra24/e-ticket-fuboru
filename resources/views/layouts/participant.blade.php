@@ -26,7 +26,7 @@
             <div class="collapse navbar-collapse my-2" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item mx-3">
-                        <a class="nav-link fw-semibold" href="{{ route('participant.index') }}">Dashboard</a>
+                        <a class="nav-link fw-semibold" href="{{ route('participant.index') }}">Beranda</a>
                     </li>
                     <li class="nav-item mx-3">
                         <a class="nav-link fw-semibold"
