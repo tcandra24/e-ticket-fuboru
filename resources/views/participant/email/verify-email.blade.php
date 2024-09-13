@@ -3,7 +3,7 @@
 @section('content')
     <h2 class="text-center">Verifikasi Email</h2>
     <p>Peserta {{ $name }},</p>
-    <p>Terimakasih telag melakukan pendaftaran ke website kami. Untuk menyelesaikan pendaftaran Anda, Harap
+    <p>Terimakasih telah melakukan pendaftaran ke website kami. Untuk menyelesaikan pendaftaran Anda, harap
         verifikasi alamat email Anda dengan mengklik tombol di bawah ini:</p>
     <div class="container-btn">
         <a href="{{ route('participant.verify-email', $token) }}" target="_blank"
