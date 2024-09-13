@@ -1271,7 +1271,7 @@
                                     <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('D8', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>D8</button>
                                     <button type="button" class="btn btn-padding btn-vvip btn-choose"
-                                        {{ in_array('D9', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>D19</button>
+                                        {{ in_array('D9', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>D9</button>
                                     <button type="button" class="btn btn-padding btn-vvip btn-choose"
                                         {{ in_array('D10', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>D10</button>
                                     <button type="button" class="btn btn-padding btn-vvip btn-choose"
