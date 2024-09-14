@@ -23,19 +23,19 @@ class TokenVerification
         //     ], 400);
         // }
 
-        // if (!$request->headers->has('X-Token')){
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'Token Header harus diisi'
-        //     ], 400);
-        // }
+        if (!$request->headers->has('Authorization')){
+            return response()->json([
+                'success' => false,
+                'message' => 'Token Header harus diisi'
+            ], 400);
+        }
 
-        // if ($request->header('X-Token') !== 'bd78cb96df3de3e068e22643760e85bbd9a66b3b6ec6b9248d580d011e489143') {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'Token Transaksi Salah'
-        //     ], 400);
-        // }
+        if ($request->header('Authorization') !== 'bd78cb96df3de3e068e22643760e85bbd9a66b3b6ec6b9248d580d011e489143') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Token Transaksi Salah'
+            ], 400);
+        }
 
         return $next($request);
     }
