@@ -75,7 +75,7 @@ class RegistrationController extends Controller
 
             $registrations = app($event->model_path)->select(...$fields)->when(request()->search, function($query){
                 if (request()->filter === 'email') {
-                    $query->whereRelation('user', 'name', 'LIKE', '%' . request()->search . '%');
+                    $query->whereRelation('participant', 'email', 'LIKE', '%' . request()->search . '%');
                 } else {
                     $query->where(request()->filter, 'LIKE', '%' . request()->search . '%');
                 }
