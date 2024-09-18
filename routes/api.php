@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/scan-qr', [\App\Http\Controllers\Api\ScanController::class, 'scan']);
-Route::get('/registrations', [\App\Http\Controllers\Api\RegistrationController::class, 'index']);
+Route::get('/events', [\App\Http\Controllers\Api\EventController::class, 'index']);
+Route::get('/event/{slug}', [\App\Http\Controllers\Api\EventController::class, 'show']);
 // Route::post('/manual-check-in', [\App\Http\Controllers\Api\ScanController::class, 'manualCheckIn']);
 
 Route::fallback(function() {
