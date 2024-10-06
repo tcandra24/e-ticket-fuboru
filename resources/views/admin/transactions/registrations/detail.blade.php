@@ -130,16 +130,22 @@
                 <div class="card-body">
                     <h5 class="card-title fw-semibold mb-4">Bukti Transfer</h5>
                     <div class="row">
-                        @foreach ($registration->receipts as $receipt)
-                            <div class="col-lg-6 d-flex align-items-stretch">
-                                <div class="mb-3 w-100">
-                                    <a href="{{ $receipt->file }}"
-                                        data-lightbox="{{ $registration->registration_number }}">
-                                        <button class="btn btn-primary">Gambar-{{ $loop->iteration }}</button>
-                                    </a>
+                        @if (count($registration->receipts) > 0)
+                            @foreach ($registration->receipts as $receipt)
+                                <div class="col-lg-6 d-flex align-items-stretch">
+                                    <div class="mb-3 w-100">
+                                        <a href="{{ $receipt->file }}"
+                                            data-lightbox="{{ $registration->registration_number }}">
+                                            <button class="btn btn-primary">Gambar-{{ $loop->iteration }}</button>
+                                        </a>
+                                    </div>
                                 </div>
+                            @endforeach
+                        @else
+                            <div class="alert alert-primary alert-dismissible fade show m-2">
+                                <strong>Info!</strong> Bukti transfer masih kosong
                             </div>
-                        @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
