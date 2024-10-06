@@ -246,7 +246,7 @@ class RegistrationController extends Controller
     {
         try {
             $event = Event::where('id', $event_id)->first();
-            $registration = app($event->model_path)->with('seats')->where('event_id', $event_id)->where('registration_number', $registration_number)->first();
+            $registration = app($event->model_path)->with(['seats', 'receipts'])->where('event_id', $event_id)->where('registration_number', $registration_number)->first();
 
             $seats = Seat::where('group_seat_id', $registration->group_seat_id)->get();
             $seatAlreadyBook = RegistrationSeat::with(['seat' => function($query) use ($registration){

@@ -7,6 +7,7 @@
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/select2/css/select2.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/select2/css/select2-bootstrap-5-theme.min.css') }}" />
+    <link href="{{ asset('assets/libs/lightbox/css/lightbox.css') }}" rel="stylesheet">
 
     <style>
         .select2-container--bootstrap-5.select2-container--focus .select2-selection,
@@ -122,6 +123,23 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4">Bukti Transfer</h5>
+                    <div class="row">
+                        @foreach ($registration->receipts as $receipt)
+                            <div class="col-lg-6 d-flex align-items-stretch">
+                                <div class="mb-3 w-100">
+                                    <a href="{{ $receipt->file }}"
+                                        data-lightbox="{{ $registration->registration_number }}">
+                                        <button class="btn btn-primary">Gambar-{{ $loop->iteration }}</button>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
