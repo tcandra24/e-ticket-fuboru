@@ -26,12 +26,12 @@ class UtilityController extends Controller
             ];
         });
 
-        $headers = [...$allForm];
         $fields = [...$allForm->map(function($item){
             return $item['name'];
         })];
 
         array_push($fields, 'is_scan');
+        array_push($fields, 'created_at');
 
         $objectFields = [...$allForm->map(function($item){
             return [
@@ -42,11 +42,21 @@ class UtilityController extends Controller
             ];
         })];
 
-        array_unshift($headers, [
+        array_unshift($fields, 'registration_number');
+
+        array_unshift($objectFields, [
             'name' => 'registration_number',
             'label' => 'Nomer Registrasi',
+            'model_path' => null,
+            'relation_method_name' => '',
         ]);
-        array_unshift($fields, 'registration_number');
+
+        array_push($objectFields, [
+            'name' => 'created_at',
+            'label' => 'Tanggal Buat',
+            'model_path' => null,
+            'relation_method_name' => '',
+        ]);
 
         $registrations = app($event->model_path)->select(...$fields)->when(request()->search, function($query){
             if (request()->filter === 'email') {
