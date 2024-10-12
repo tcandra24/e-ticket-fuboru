@@ -112,6 +112,8 @@ Route::prefix('admin')->group(function() {
             Route::get('/registration-manual/create/{event_id}', [ \App\Http\Controllers\Admin\Transaction\RegistrationController::class, 'create' ])->name('transaction.registrations.create');
             Route::post('/registration-manual/{event_id}', [ \App\Http\Controllers\Admin\Transaction\RegistrationController::class, 'store' ])->name('transaction.registrations.store');
 
+            Route::get('/registration-seats/{event_id}', \App\Http\Controllers\Admin\Transaction\SeatController::class)->name('transaction.registrations.seats');
+
             Route::delete('/registration/{event_id}/{registration_number}', [ \App\Http\Controllers\Admin\Transaction\RegistrationController::class, 'destroy' ])->name('transaction.registrations.delete');
             Route::patch('/registration/{event_id}/{registration_number}', [ \App\Http\Controllers\Admin\Transaction\RegistrationController::class, 'update' ])->name('transaction.registrations.update');
 
