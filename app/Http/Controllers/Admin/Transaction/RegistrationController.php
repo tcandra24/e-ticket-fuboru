@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Transaction;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,6 +16,8 @@ use App\Models\Seat;
 use App\Models\FormField;
 use App\Models\GroupSeat;
 use App\Models\Participant;
+use App\Models\Receipt;
+use Illuminate\Support\Facades\DB;
 
 class RegistrationController extends Controller
 {
@@ -214,9 +215,19 @@ class RegistrationController extends Controller
     {
         try {
             $event = Event::where('id', $event_id)->first();
+            DB::transaction(function() use ($event, $event_id, $registration_number){
+                $registration = app($event->model_path)->where('event_id', $event_id)->where('registration_number', $registration_number)->first();
+                RegistrationSeat::where('registration_id', $registration->id)->delete();
 
-            $registration = app($event->model_path)->where('event_id', $event_id)->where('registration_number', $registration_number);
-            $registration->delete();
+                foreach($registration->receipts()->get() as $receipt){
+                    if(Storage::disk('local')->exists('public/images/receipt/'. basename($receipt->file))){
+                        Storage::disk('local')->delete('public/images/receipt/'. basename($receipt->file));
+                    }
+                }
+
+                Receipt::where('registration_id', $registration->id)->delete();
+                $registration->delete();
+            });
 
             return redirect()->route('transaction.registrations.show', $event_id)->with('success', 'Data Registrasi Berhasil Dihapus');
         } catch (\Exception $e) {
