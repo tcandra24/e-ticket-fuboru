@@ -60,13 +60,13 @@ class TransactionController extends Controller
 
         $fields->push($objectStd);
 
-        if(count($registration->seats) > 0){
-            $objectStd = new \stdClass();
-            $objectStd->title = 'Kursi';
-            $objectStd->value = $registration->seats;
+        // if(count($registration->seats) > 0){
+        //     $objectStd = new \stdClass();
+        //     $objectStd->title = 'Kursi';
+        //     $objectStd->value = $registration->seats;
 
-            $fields->push($objectStd);
-        }
+        //     $fields->push($objectStd);
+        // }
 
 
         foreach($forms as $form){
