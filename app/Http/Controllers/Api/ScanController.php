@@ -34,6 +34,7 @@ class ScanController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Scan berhasil',
+                'data' => $registration->with(['seats'])->first()
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
