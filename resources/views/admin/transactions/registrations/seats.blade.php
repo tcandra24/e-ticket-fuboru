@@ -347,7 +347,7 @@
                                     <button type="button" class="btn btn-padding btn-reguler btn-choose"
                                         {{ in_array('N8', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>N8</button>
                                     <button type="button" class="btn btn-padding btn-reguler btn-choose"
-                                        {{ in_array('N9 ', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>N9</button>
+                                        {{ in_array('N9', $seatAlreadyBook->pluck('name')->toArray()) ? 'disabled' : '' }}>N9</button>
                                 </div>
 
                                 <div class="d-flex flex-row bd-highlight justify-content-evenly" style="gap: 5px;">
