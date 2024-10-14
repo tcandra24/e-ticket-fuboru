@@ -31,7 +31,7 @@ class EventController extends Controller
     public function show($slug)
     {
         try {
-            $event = Event::with('registration')->where('slug', $slug)->where('is_active', true)->first();
+            $event = Event::with(['registration', 'registration.seats'])->where('slug', $slug)->where('is_active', true)->first();
 
             return response()->json([
                 'success' => true,
