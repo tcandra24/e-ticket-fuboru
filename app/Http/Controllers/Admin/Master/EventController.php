@@ -50,6 +50,7 @@ class EventController extends Controller
                 'bitly_id'      => $id,
                 'slug'          => $slug,
                 'model_path'    => $request->model_path,
+                'date'          => $request->date,
             ]);
 
             $event->forms()->sync($request->fields);
@@ -75,8 +76,15 @@ class EventController extends Controller
     public function update(UpdateRequest $request, Event $event)
     {
         try {
-            $arrayRequest = [];
             $isActive = $request->is_active ? true : false;
+            $arrayRequest = [
+                'name' => $request->name,
+                'description' => $request->description,
+                'is_active' => $isActive,
+                'link' => $request->link,
+                'model_path' => $request->model_path,
+                'date' => $request->date,
+            ];
 
             if($request->file('image')) {
                 if(Storage::disk('local')->exists('public/images/events/'. basename($event->name))){
@@ -86,23 +94,8 @@ class EventController extends Controller
                 $image = $request->file('image');
                 $image->storeAs('public/images/events', $image->hashName());
 
-                $arrayRequest = [
-                    'name' => $request->name,
-                    'description' => $request->description,
-                    'image' => $image->hashName(),
-                    'is_active' => $isActive,
-                    'link' => $request->link,
-                    'model_path' => $request->model_path,
-                ];
+                $arrayRequest['image'] = $image->hashName();
 
-            } else {
-                $arrayRequest = [
-                    'name' => $request->name,
-                    'description' => $request->description,
-                    'is_active' => $isActive,
-                    'link' => $request->link,
-                    'model_path' => $request->model_path,
-                ];
             }
 
             if($event->name !== $request->name){

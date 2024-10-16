@@ -13,6 +13,10 @@
             box-shadow: unset !important;
         }
     </style>
+
+    <link href="{{ asset('assets/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -60,10 +64,24 @@
                 <div class="row">
                     <div class="col-lg-6 d-flex align-items-stretch">
                         <div class="mb-3 w-100">
+                            <label for="date" class="form-label">Tanggal</label>
+                            <input type="text" name="date"
+                                class="form-control {{ $errors->has('date') ? 'border border-danger' : '' }}"
+                                value="{{ \Carbon\Carbon::parse($event->date)->format('Y/m/d') }}" id="date"
+                                aria-describedby="date">
+                            @error('date')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 d-flex align-items-stretch">
+                        <div class="mb-3 w-100">
                             <label for="link" class="form-label">Link</label>
                             <input type="text" name="link"
-                                class="form-control {{ $errors->has('link') ? 'border border-danger' : '' }}" id="link"
-                                value="{{ $event->link }}" aria-describedby="link">
+                                class="form-control {{ $errors->has('link') ? 'border border-danger' : '' }}"
+                                id="link" value="{{ $event->link }}" aria-describedby="link">
                             @error('link')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -136,10 +154,19 @@
     <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}">
+    </script>
 
     <script>
         $('#fields').select2({
             theme: 'bootstrap-5'
         })
+
+        $('#date').bootstrapMaterialDatePicker({
+            weekStart: 1,
+            time: false,
+            format: 'YYYY/MM/DD',
+        });
     </script>
 @endsection

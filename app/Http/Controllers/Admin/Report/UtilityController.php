@@ -32,6 +32,7 @@ class UtilityController extends Controller
 
         array_push($fields, 'is_scan');
         array_push($fields, 'created_at');
+        array_push($fields, 'token');
 
         $objectFields = [...$allForm->map(function($item){
             return [
@@ -54,6 +55,13 @@ class UtilityController extends Controller
         array_push($objectFields, [
             'name' => 'created_at',
             'label' => 'Tanggal Buat',
+            'model_path' => null,
+            'relation_method_name' => '',
+        ]);
+
+        array_push($objectFields, [
+            'name' => 'token',
+            'label' => 'Token',
             'model_path' => null,
             'relation_method_name' => '',
         ]);

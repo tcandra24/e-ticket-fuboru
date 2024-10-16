@@ -28,6 +28,7 @@ class UpdateRequest extends FormRequest
             'description' => 'required',
             'fields' => 'required',
             'model_path' => 'required',
+            'date' => 'required',
         ];
     }
 
@@ -38,6 +39,7 @@ class UpdateRequest extends FormRequest
             'description.required' => 'Keterangan wajib diisi',
             'fields.required' => 'Form Field harus diisi',
             'model_path.required' => 'Model harus diisi',
+            'date.required' => 'Tanggal harus diisi',
         ];
     }
 }

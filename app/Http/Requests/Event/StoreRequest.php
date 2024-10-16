@@ -29,6 +29,7 @@ class StoreRequest extends FormRequest
             'image' => 'required',
             'fields' => 'required',
             'model_path' => 'required',
+            'date' => 'required',
         ];
     }
 
@@ -40,6 +41,7 @@ class StoreRequest extends FormRequest
             'image.required' => 'Gambar wajib diisi',
             'fields.required' => 'Form Field harus diisi',
             'model_path.required' => 'Model harus diisi',
+            'date.required' => 'Tanggal harus diisi',
         ];
     }
 }

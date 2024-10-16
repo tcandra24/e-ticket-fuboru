@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Events\UpdateRegisterData;
+use Carbon\Carbon;
 
 use App\Models\Registration;
-use Carbon\Carbon;
 
 class ScanController extends Controller
 {
@@ -16,7 +16,7 @@ class ScanController extends Controller
         try {
             $token = $request->token;
 
-            $registration = Registration::where('token', $token);
+            $registration = Registration::with(['event'])->where('token', $token);
 
             if (!$registration->exists()) {
                 throw new \Exception('Token tidak ditemukan');
@@ -24,6 +24,11 @@ class ScanController extends Controller
 
             if ($registration->first()->is_scan === 'Sudah Scan') {
                 throw new \Exception('User Sudah Scan QrCode');
+            }
+
+            $registrationCheck = $registration->first();
+            if(Carbon::parse($registrationCheck->event->date)->format('Y-m-d') !== Carbon::now()->format('Y-m-d')){
+                throw new \Exception('Qrcode Tidak Valid, Jadwal Event Bukan Hari Ini');
             }
 
             $registration->update([
