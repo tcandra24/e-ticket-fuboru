@@ -46,7 +46,9 @@ class RegistrationController extends Controller
         //         // $query->where('is_valid', true);
         //     },
         // ])
-        ->withSum('registration', 'qty')
+        ->withCount(['seats as filled_seats_count' => function ($query) {
+            $query->whereHas('registrations');
+        }])
         ->where('name', '<>', 'undangan')->get();
 
         return view('participant.registration.create', [ 'event' => $event, 'forms' => $forms, 'groupSeats' => $groupSeats ]);
