@@ -80,8 +80,10 @@ class RegistrationController extends Controller
         $request->validate($rules, $ruleMessage);
 
         try {
-            $groupSeat = GroupSeat::select('name', 'quota', 'price')->withSum('registration', 'qty')->where('id', $request->group_seat_id)->first();
-            $avaliableQuota = $groupSeat->quota - $groupSeat->registration_sum_qty;
+            $groupSeat = GroupSeat::select('name', 'quota', 'price') ->withCount(['seats as filled_seats_count' => function ($query) {
+                $query->whereHas('registrations');
+            }])->where('id', $request->group_seat_id)->first();
+            $avaliableQuota = $groupSeat->quota - $groupSeat->filled_seats_count;
             $qty = $request->qty;
 
             if($avaliableQuota === 0){
