@@ -19,8 +19,12 @@ class GroupSeatController extends Controller
         //         // $query->where('is_valid', true);
         //     },
         // ])
-        ->withSum('registration', 'qty')
+        // ->withCount('seats')
+        ->withCount(['seats as filled_seats_count' => function ($query) {
+            $query->whereHas('registrations');
+        }])
         ->paginate(10);
+
         return view('admin.masters.group-seats.index', ['groupSeats' => $groupSeats]);
     }
 

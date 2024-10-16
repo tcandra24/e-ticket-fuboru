@@ -100,7 +100,7 @@
                                             </td>
                                             <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">
-                                                    {{ $groupSeat->quota - $groupSeat->registration_sum_qty }}
+                                                    {{ $groupSeat->quota - $groupSeat->filled_seats_count }}
                                                 </p>
                                             </td>
                                             <td class="border-bottom-0 pb-0">
