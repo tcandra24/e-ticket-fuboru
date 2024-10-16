@@ -23,16 +23,9 @@ class UtilityController extends Controller
                 'label' => $item->label,
                 'model_path' => $item->model_path,
                 'relation_method_name' => $item->relation_method_name,
+                'is_multiple' => $item->multiple ? true : false,
             ];
         });
-
-        $fields = [...$allForm->map(function($item){
-            return $item['name'];
-        })];
-
-        array_push($fields, 'is_scan');
-        array_push($fields, 'created_at');
-        array_push($fields, 'token');
 
         $objectFields = [...$allForm->map(function($item){
             return [
@@ -40,10 +33,9 @@ class UtilityController extends Controller
                 'label' => $item['label'],
                 'model_path' => $item['model_path'],
                 'relation_method_name' => $item['relation_method_name'],
+                'is_multiple' => $item['is_multiple'],
             ];
         })];
-
-        array_unshift($fields, 'registration_number');
 
         array_unshift($objectFields, [
             'name' => 'registration_number',
@@ -66,7 +58,15 @@ class UtilityController extends Controller
             'relation_method_name' => '',
         ]);
 
-        $registrations = app($event->model_path)->select(...$fields)->when(request()->search, function($query){
+        array_push($objectFields, [
+            'name' => 'seats',
+            'label' => 'Kursi',
+            'model_path' => '\App\Models\RegistrationSeat',
+            'relation_method_name' => 'seats',
+            'is_multiple' => true,
+        ]);
+
+        $registrations = app($event->model_path)->select('*')->when(request()->search, function($query){
             if (request()->filter === 'email') {
                 $query->whereRelation('participant', 'name', 'LIKE', '%' . request()->search . '%');
             } else {
