@@ -167,10 +167,10 @@
                             </div>
                             <button type="submit" class="btn btn-primary btn-submit">Submit</button>
                             <button type="reset" class="btn btn-danger">Reset</button>
-                            <a href="{{ asset('assets/images/layout-seat.jpg') }}" class="btn btn-info my-2"
+                            {{-- <a href="{{ asset('assets/images/layout-seat.jpg') }}" class="btn btn-info my-2"
                                 data-lightbox="Mapping Kursi Acara">
                                 Mapping Tempat Duduk
-                            </a>
+                            </a> --}}
                         </form>
                     </div>
                 </div>
