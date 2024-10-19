@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Event;
+use App\Models\GroupSeat;
 
 class RegistrationController extends Controller
 {
@@ -85,12 +86,18 @@ class RegistrationController extends Controller
             ->when(request()->valid, function($query){
                 $query->where('is_valid', request()->valid == 'true' ? true : false);
             })
+            ->when(request()->group_seats, function($query){
+                $query->where('group_seat_id', request()->group_seats);
+            })
             ->where('event_id', $id)->paginate(10);
+
+            $groupSeats = GroupSeat::where('name', '<>', 'undangan')->where('event_id', $event->id)->get();
 
             return view('admin.reports.registrations.show', [
                 'fields' => $objectFields,
                 'registrations' => $registrations,
-                'event' => $event
+                'event' => $event,
+                'groupSeats' => $groupSeats,
             ]);
         } catch (\Exception $e) {
             return redirect()->route('report.registrations.show', $event)->with('error', $e->getMessage());

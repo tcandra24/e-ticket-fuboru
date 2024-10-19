@@ -88,6 +88,37 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-lg-2 d-flex align-items-stretch">
+                                    <div class="mb-3 w-100">
+                                        <label for="group_seats" class="form-label">Grup Kursi</label>
+                                        <select name="group_seats" class="form-control" id="group_seats"
+                                            aria-describedby="group_seats">
+                                            <option value="">Semua Grup Kursi</option>
+                                            @foreach ($groupSeats as $groupSeat)
+                                                <option value="{{ $groupSeat->id }}"
+                                                    {{ request()->has('group_seats') && request()->group_seats === (string) $groupSeat->id ? 'selected' : '' }}>
+                                                    {{ $groupSeat->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 d-flex align-items-stretch">
+                                    <div class="mb-3 w-100">
+                                        <label for="seats" class="form-label">Kursi</label>
+                                        <select name="seats[]" class="form-control" id="seats" aria-describedby="seats"
+                                            multiple>
+                                            <option value="">Semua Kursi</option>
+                                            @foreach ($seats as $seat)
+                                                <option value="{{ $seat->id }}">
+                                                    {{ $seat->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-6 d-flex align-items-stretch">
                                     <div class="mb-3 w-100">
                                         <div class="d-flex">
@@ -260,8 +291,8 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
@@ -269,49 +300,66 @@
     <script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
 
     <script>
-        $('#scan').select2({
-            theme: 'bootstrap-5'
-        })
+        const defaultSeats = @json($defaultSeats)
 
-        $('#valid').select2({
-            theme: 'bootstrap-5'
-        })
-
-        $('.btn-delete').on('click', function() {
-            const id = $(this).attr('data-id')
-            const name = $(this).attr('data-name')
-
-            Swal.fire({
-                title: "Yakin Hapus Data Registrasi ?",
-                text: name,
-                icon: "warning",
-                showCancelButton: !0,
-                confirmButtonColor: "#5d87ff",
-                confirmButtonText: "Yes",
-                closeOnConfirm: !1
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $('#form-delete-registration-' + id).submit()
-                }
+        $(document).ready(function() {
+            $('#scan').select2({
+                theme: 'bootstrap-5'
             })
-        })
 
-        $('.btn-update').on('click', function() {
-            const id = $(this).attr('data-id')
-            const name = $(this).attr('data-name')
+            $('#valid').select2({
+                theme: 'bootstrap-5'
+            })
 
-            Swal.fire({
-                title: "Yakin Ubah Status Data Registrasi ?",
-                text: name,
-                type: "warning",
-                showCancelButton: !0,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: !1
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $('#form-update-registration-' + id).submit()
-                }
+            $('#group_seats').select2({
+                theme: 'bootstrap-5'
+            })
+
+            $('#seats').select2({
+                theme: 'bootstrap-5'
+            })
+
+            if (defaultSeats.length > 0) {
+                $('#seats').val(defaultSeats).trigger('change')
+            }
+
+
+            $('.btn-delete').on('click', function() {
+                const id = $(this).attr('data-id')
+                const name = $(this).attr('data-name')
+
+                Swal.fire({
+                    title: "Yakin Hapus Data Registrasi ?",
+                    text: name,
+                    icon: "warning",
+                    showCancelButton: !0,
+                    confirmButtonColor: "#5d87ff",
+                    confirmButtonText: "Yes",
+                    closeOnConfirm: !1
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#form-delete-registration-' + id).submit()
+                    }
+                })
+            })
+
+            $('.btn-update').on('click', function() {
+                const id = $(this).attr('data-id')
+                const name = $(this).attr('data-name')
+
+                Swal.fire({
+                    title: "Yakin Ubah Status Data Registrasi ?",
+                    text: name,
+                    type: "warning",
+                    showCancelButton: !0,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    closeOnConfirm: !1
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#form-update-registration-' + id).submit()
+                    }
+                })
             })
         })
     </script>

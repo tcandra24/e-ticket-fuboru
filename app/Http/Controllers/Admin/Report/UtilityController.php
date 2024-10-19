@@ -56,6 +56,7 @@ class UtilityController extends Controller
             'label' => 'Token',
             'model_path' => null,
             'relation_method_name' => '',
+            'is_multiple' => false,
         ]);
 
         array_push($objectFields, [
@@ -66,6 +67,13 @@ class UtilityController extends Controller
             'is_multiple' => true,
         ]);
 
+        array_push($objectFields, [
+            'name' => 'is_scan',
+            'label' => 'Status Scan',
+            'model_path' => null,
+            'relation_method_name' => '',
+        ]);
+
         $registrations = app($event->model_path)->select('*')->when(request()->search, function($query){
             if (request()->filter === 'email') {
                 $query->whereRelation('participant', 'name', 'LIKE', '%' . request()->search . '%');
@@ -74,6 +82,9 @@ class UtilityController extends Controller
             }
         }) ->when(request()->scan, function($query){
             $query->where('is_scan', request()->scan == 'true' ? true : false);
+        })
+        ->when(request()->group_seats, function($query){
+            $query->where('group_seat_id', request()->group_seats);
         })
         ->where('fullname', '<>', '')
         ->where('event_id', $event_id)->get();

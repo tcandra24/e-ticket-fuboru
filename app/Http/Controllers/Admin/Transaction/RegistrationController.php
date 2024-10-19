@@ -199,12 +199,33 @@ class RegistrationController extends Controller
             ->when(request()->valid, function($query){
                 $query->where('is_valid', request()->valid == 'true' ? true : false);
             })
+            ->when(request()->group_seats, function($query){
+                $query->where('group_seat_id', request()->group_seats);
+            })
+            ->when(request()->seats, function($query){
+                $query->whereHas('seats', function($query){
+                    $query->whereIn('id', request()->seats);
+                });
+            })
             ->where('event_id', $id)->paginate(10);
+
+            $groupSeats = GroupSeat::where('name', '<>', 'undangan')->where('event_id', $event->id)->get();
+            $seats = Seat::whereHas('groupSeat', function($query) use ($event){
+                $query->where('event_id', $event->id);
+            })->get();
+
+            $defaultSeats = [];
+            if(request()->has('seats')){
+                $defaultSeats = request()->seats;
+            }
 
             return view('admin.transactions.registrations.show', [
                 'fields' => $objectFields,
                 'registrations' => $registrations,
-                'event' => $event
+                'event' => $event,
+                'groupSeats' => $groupSeats,
+                'seats' => $seats,
+                'defaultSeats'=> $defaultSeats
             ]);
         } catch (\Exception $e) {
             return redirect()->route('transaction.registrations.show', $event)->with('error', $e->getMessage());
